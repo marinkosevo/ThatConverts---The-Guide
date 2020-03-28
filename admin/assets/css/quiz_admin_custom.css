@@ -1,0 +1,22 @@
+.quizForm_wrap {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+
+.question_wrap,
+.answer_wrap {
+    padding: 10px;
+}
+
+.add_answer_btn {
+    margin-left: 10px;
+}
+
+.question_heading .glyphicon {
+    float: right;
+}
+
+.question_heading {
+    cursor: pointer;
+}
