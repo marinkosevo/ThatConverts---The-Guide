@@ -38,6 +38,8 @@ define( 'THATCONVERTS_THEGUIDE_VERSION', '1.0.0' );
 
 //Including All Relevant Files
 include('admin/pages.php');
+include('public/pages.php');
+
 
 
 

@@ -7,8 +7,12 @@
             editQuiz($_GET['quiz']);
         }
         else{
+            
+            if(isset($_GET['action']) && ($_GET['action'] == 'delete')){
+                deleteQuiz($_GET['quiz']);
+            }
             $myListTable = new Quiz_Table();
-            echo '<div class="wrap"><h2>My List Table Test</h2>';
+            echo '<div class="wrap"><h2>'. __('All Quizzes Table', 'thatconverts_theguide').'</h2>';
             echo '<form method="GET">' ;
             $myListTable->prepare_items(); 
             ?>
@@ -52,23 +56,15 @@ class Quiz_Table extends WP_List_Table {
         
             return $result;
         }
-            var $example_data = array(
-                array('id' => 1,'name' => 'Quarter Share', 'createdAt' => 'Nathan Lowell'),
-                array('id' => 2,'name' => 'Quarter Share', 'createdAt' => 'Nathan Lowell'),
-                array('id' => 3,'name' => 'Quarter Share', 'createdAt' => 'Nathan Lowell'),
-                array('id' => 4,'name' => 'Quarter Share', 'createdAt' => 'Nathan Lowell'),
-                array('id' => 5,'name' => 'Quarter Share', 'createdAt' => 'Nathan Lowell'),
-                array('id' => 6,'name' => 'Quarter Share', 'createdAt' => 'Nathan Lowell'),
-                array('id' => 7,'name' => 'Quarter Share', 'createdAt' => 'Nathan Lowell')
-                );
 
     //Getting columns
     function get_columns(){
         $columns = array(
           'cb'        => '<input type="checkbox" />',
           'id' => 'ID',
-          'name'    => 'Name',
-          'createdAt'      => 'Created At'
+          'name'    => __('Name', 'thatconverts_theguide'),
+          'createdAt'      => __('Created At', 'thatconverts_theguide'),
+          'shortcode' => __('Shortcode', 'thatconverts_theguide')
         );
         return $columns;
       }
@@ -77,10 +73,10 @@ class Quiz_Table extends WP_List_Table {
         $columns = $this->get_columns();
         $hidden = array();
         $sortable = $this->get_sortable_columns();
-        $data = $this->get_quizzes(15);
+        $data = $this->get_quizzes();
         $this->_column_headers = array($columns, $hidden, $sortable);
         usort( $data, array( &$this, 'usort_reorder' ) );
-        $per_page = 5;
+        $per_page = 10;
         $current_page = $this->get_pagenum();
         $total_items = count($data);
       
@@ -110,7 +106,7 @@ class Quiz_Table extends WP_List_Table {
     //Get sortable columns
     function get_sortable_columns() {
         $sortable_columns = array(
-          'id'  => array('id',false),
+          'id'  => array('id',true),
           'name' => array('name',false),
           'createdAt'   => array('createdAt',false)
         );
@@ -119,7 +115,7 @@ class Quiz_Table extends WP_List_Table {
       //Sort functions
       function usort_reorder( $a, $b ) {
         // If no sort, default to title
-        $orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'name';
+        $orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'id';
         // If no order, default to asc
         $order = ( ! empty($_GET['order'] ) ) ? $_GET['order'] : 'asc';
         // Determine sort order
@@ -132,7 +128,7 @@ class Quiz_Table extends WP_List_Table {
       function column_name($item) {
         $actions = array(
                   'edit'      => sprintf('<a href="?page=%s&action=%s&quiz=%s">Edit</a>',$_REQUEST['page'],'edit',$item['id']),
-                  'delete'    => sprintf('<a href="?page=%s&action=%s&quiz=%s">Delete</a>',$_REQUEST['page'],'delete',$item['id']),
+                  'delete'    => sprintf('<a onclick="return confirm(`Are you sure you want to delete the quiz: %s?\nIt cannot be undone!`)" href="?page=%s&action=%s&quiz=%s">Delete</a>',$item['name'],$_REQUEST['page'],'delete',$item['id']),
               );
       
         return sprintf('%1$s %2$s', $item['name'], $this->row_actions($actions) );
@@ -146,9 +142,18 @@ class Quiz_Table extends WP_List_Table {
       function column_cb($item) {
         return sprintf(
             '<input type="checkbox" name="quiz[]" value="%s" />', $item['id']
-        );    
-    }      
-      
+            );         
+        }    
+
+      function column_shortcode($item) {
+        return sprintf(
+            '[thatconverts_quiz id="%s"]', $item['id']
+            );         
+        }  
+        function delete($item) {
+            echo 'test';           
+         }      
+                    
 
     //End of Class
 }
