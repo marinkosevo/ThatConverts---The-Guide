@@ -11,9 +11,9 @@
             <h1> <?php echo esc_html( get_admin_page_title() ); ?> </h1>
             <div class="quiz_navigation">
                 <ul>
-                    <li><a class="nav_links active" id="Quiz_link" onclick="openTab('Quiz')"><?php _e('Quiz info', 'thatconverts_theguide'); ?></a></li>
-                    <li><a class="nav_links" id="Results_link" onclick="openTab('Results')"><?php _e('Results', 'thatconverts_theguide'); ?></a></li>
-                    <li><a class="nav_links" id="Questions_link" onclick="openTab('Questions')"><?php _e('Questions', 'thatconverts_theguide'); ?></a></li>
+                    <li><a class="nav_links active" id="Quiz_link"><?php _e('Quiz info', 'thatconverts_theguide'); ?></a></li>
+                    <li><a class="nav_links" id="Results_link" ><?php _e('Results', 'thatconverts_theguide'); ?></a></li>
+                    <li><a class="nav_links" id="Questions_link" ><?php _e('Questions', 'thatconverts_theguide'); ?></a></li>
                 </ul>
             </div>
             <form action="admin.php?page=thatconverts_add_new_quiz" id="quiz_form" method="post" enctype="multipart/form-data">
@@ -21,11 +21,9 @@
 
                 <div class="quiz_heading">
 
-                        <div class="form-group">
-                            <div class="quiz_heading">
-                                <h2><?php _e('Quiz name', 'thatconverts_theguide'); ?></h2>
-                            </div>
+                        <div class="question">
                                 <div class="form-group">
+                                    <label for="name"><?php _e('Quiz name', 'thatconverts_theguide'); ?></label><br>
                                     <input type="text" class="form-control" name="name" placeholder="<?php _e('Enter quiz name', 'thatconverts_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
@@ -40,10 +38,15 @@
                                     <label for="description"><?php _e('Results page desription', 'thatconverts_theguide'); ?></label><br>
                                     <input type="text" class="form-control" name="results_description" placeholder="<?php _e('Enter results page description', 'thatconverts_theguide'); ?>">
                                 </div>
+                        </div>
+                        <div class="question">
                                 <div class="form-group">
                                     <input type="checkbox" id="collect_results" name="collect_results" value="1">
                                     <label for="collect_results"><?php _e('Collect quiz results?', 'thatconverts_theguide'); ?></label><br>
                                 </div>
+                        </div>
+                        <div class="question">
+
                                 <div class="form-group">
                                     <input type="checkbox" id="collect_email" name="collect_email" value="1">
                                     <label for="collect_email"><?php _e('Email address required?', 'thatconverts_theguide'); ?></label><br>
@@ -54,27 +57,30 @@
                                 </div>
 
                         </div>
+                        <div class="button_navigation">
+                            <button type="button" value="Next" id="first_next">Next </button>
+                            <div class="warning" id="first_warning"></div>
+                        </div>
                 </div>
             </div>
             <!--- Result -->
             <div class="section_wrap" id="Results" style="display:none">
-                    <div class="quiz_heading">
-                        <h2><?php _e('Results', 'thatconverts_theguide'); ?></h2>
-                   </div>
                     <div id="results_accordion" class="collapse">
                         <div class="form-group">
                             <label for="button"><?php _e('Add new result (Max 5)', 'thatconverts_theguide'); ?></label>
                             <button type="button" class="btn btn-default" id="add_result" aria-label="Left Align">+</button>
                         </div>
                     </div>
+                    <div class="button_navigation">
+                            <button type="button" value="Next" id="second_next">Next </button>
+                            <div class="warning" id="second_warning">
+                            </div>
+                        </div>
+
             </div>
             <!--- End result -->
             <!--- Questions -->
             <div class="section_wrap" id="Questions" style="display:none">
-
-                    <div class="quiz_heading">
-                        <h2><?php _e('Questions', 'thatconverts_theguide'); ?></h2>
-                    </div>
                     <div id="questions_accordion" class="collapse">
                         <div class="form-group">
                             <label for="button"><?php _e('Add new question (Max 8)', 'thatconverts_theguide'); ?></label>
@@ -87,12 +93,21 @@
                             <button disabled type="button" class="btn btn-default" id="add_question" aria-label="Left Align">+</button>
                         </div>
                     </div>
+                    <div class="button_navigation">
+                        <button id="submit_btn" type="submit" value="Submit" disabled>Submit </button>
+                        <div class="warning" id="third_warning">
+                        </div>
+                        <div class="warning question_details_w"></div>
+                        <div class="warning empty_answers_w"></div>
+                        <div class="warning answer_details_w"></div>
+
+                    </div>
+
             </div>
             <!--- End questions -->
             <?php 
             wp_nonce_field( 'create_quiz', 'create_quiz_nonce' );
             ?>
-                <input class="quiz_button" type="submit" value="Submit">
             </form>
 
         </div>
@@ -187,8 +202,12 @@
                                     $answer['answer_text'] = '';
                                 if(!isset($answer['disqualify']))
                                     $answer['disqualify'] = 0;
+                                else
+                                    $answer['disqualify'] = implode("," , $answer['disqualify']);
                                 if(!isset($answer['result']))
                                     $answer['result'] = 0;
+                                else
+                                    $answer['result'] = implode("," , $answer['result']);
 
                                 $answers_values = "($question_id, '$answer[result]', '$answer[answer_nr]', '$answer[disqualify]', '$answer[answer_text]', '$answer[number1]', '$answer[number2]', '$date')";
                                 $query = "INSERT INTO $answers_table
@@ -205,27 +224,32 @@
                             foreach($answers as $key=>$answer){
 
                             //Check if image is set
-                            if($_FILES['answers']['name'][$question_key][$key]['image'] != ''){ 
-                                $target_file = $upload_path .'/' . $_FILES['answers']['name'][$question_key][$key]['image'];
-                                $target_url = $upload_url .'/' . $_FILES['answers']['name'][$question_key][$key]['image'];
-                                move_uploaded_file($_FILES['answers']['tmp_name'][$question_key][$key]['image'], $target_file);#
+                                if(isset($_FILES['answers']['name'][$question_key][$key]['image'])){
+                                    if($_FILES['answers']['name'][$question_key][$key]['image'] != ''){ 
+                                        $target_file = $upload_path .'/' . $_FILES['answers']['name'][$question_key][$key]['image'];
+                                        $target_url = $upload_url .'/' . $_FILES['answers']['name'][$question_key][$key]['image'];
+                                        move_uploaded_file($_FILES['answers']['tmp_name'][$question_key][$key]['image'], $target_file);#
+                                        }
+                                    else 
+                                        $target_url = '';
                                 }
-                            else 
-                                $target_url = '';
-                    
                                 if(!isset($answer['answer_text']))
                                     $answer['answer_text'] = '';
                                 if(!isset($answer['disqualify']))
                                     $answer['disqualify'] = 0;
+                                else
+                                    $answer['disqualify'] = implode("," , $answer['disqualify']);
                                 if(!isset($answer['result']))
                                     $answer['result'] = 0;
-
-                                    $answers_values = "($question_id, '$answer[result]', '$answer[answer_nr]', '$target_url', '$answer[disqualify]', '$answer[answer_text]', '$date')";
-                                    $query="INSERT INTO $answers_table
-                                    (`question_id`, `result_nr`, `answer_nr`, `answer_icon`, `answer_dq_nr`, `text`, `createdAt`)
-                                    VALUES
-                                    $answers_values";   
-                                    $wpdb->query($query);   
+                                else
+                                    $answer['result'] = implode("," , $answer['result']);
+                                
+                                $answers_values = "($question_id, '$answer[result]', '$answer[answer_nr]', '$target_url', '$answer[disqualify]', '$answer[answer_text]', '$date')";
+                                $query="INSERT INTO $answers_table
+                                (`question_id`, `result_nr`, `answer_nr`, `answer_icon`, `answer_dq_nr`, `text`, `createdAt`)
+                                VALUES
+                                $answers_values";   
+                                $wpdb->query($query);   
 
                             }
                         }

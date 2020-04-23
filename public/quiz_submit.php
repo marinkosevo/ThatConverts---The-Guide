@@ -37,12 +37,16 @@ function thatconverts_theguide_submit(){
                 foreach($answer as $selected){
                     $answer_sql = "SELECT * FROM $answers_table WHERE id = $selected";
                     $answer_data = $wpdb->get_results( $answer_sql, 'ARRAY_A' );
-            
-                    if($answer_data[0]['result_nr'] > 0){
-                        $results[$answer_data[0]['result_nr']] += 1;
+                    $result_nrs = explode(',', $answer_data[0]['result_nr']);
+                    $disqualify_nrs = explode(',', $answer_data[0]['answer_dq_nr']);
+
+                    foreach($result_nrs as $result_nr){
+                        $results[$result_nr] += 1;
+
                     }
-                    else{
-                        $results[($answer_data[0]['answer_dq_nr'] * (-1))] += (-999);
+                    foreach($disqualify_nrs as $disqualify_nr){
+                        $results[$disqualify_nr] += (-999);
+
                     }
                     $quiz_data[$question_key]['answer'] = $answer_data[0]['text'];
                 }
@@ -50,12 +54,16 @@ function thatconverts_theguide_submit(){
             else{
                 $answer_sql = "SELECT * FROM $answers_table WHERE id = $answer";
                 $answer_data = $wpdb->get_results( $answer_sql, 'ARRAY_A' );
+                $result_nrs = explode(',', $answer_data[0]['result_nr']);
+                $disqualify_nrs = explode(',', $answer_data[0]['answer_dq_nr']);
 
-                if($answer_data[0]['result_nr'] > 0){
-                        $results[$answer_data[0]['result_nr']] += 1;
-                    }
-                else{
-                    $results[($answer_data[0]['answer_dq_nr'] * (-1))] += (-999);
+                foreach($result_nrs as $result_nr){
+                    $results[$result_nr] += 1;
+
+                }
+                foreach($disqualify_nrs as $disqualify_nr){
+                    $results[$disqualify_nr] += (-999);
+
                 }
                 $quiz_data[$question_key]['answer'] = $answer_data[0]['text'];
             }
@@ -65,23 +73,39 @@ function thatconverts_theguide_submit(){
 
             //Check conditions
             $answers_sql = "SELECT `result_nr`, `answer_dq_nr` FROM $answers_table WHERE question_id = $question_key AND text = '$answer'";
-            $answers_data = $wpdb->get_results( $answers_sql, 'ARRAY_A' );
-            if(!empty($answers_data)){
-                if($answers_data[0]['result_nr'] > 0)
-                $results[$answers_data[0]['result_nr']] += 1;
-                else
-                $results[$answers_data[0]['answer_dq_nr']] += (-999);
+            $answer_data = $wpdb->get_results( $answers_sql, 'ARRAY_A' );
+            if(!empty($answer_data)){
+                $result_nrs = explode(',', $answer_data[0]['result_nr']);
+                $disqualify_nrs = explode(',', $answer_data[0]['answer_dq_nr']);
+
+                foreach($result_nrs as $result_nr){
+                    $results[$result_nr] += 1;
+                }
+                foreach($disqualify_nrs as $disqualify_nr){
+                    $results[$disqualify_nr] += (-999);
+                }
             }
             //Select default answer if none of the conditions are met
             else{
                 $answers_sql = "SELECT `result_nr`, `answer_dq_nr` FROM $answers_table WHERE question_id = $question_key AND answer_nr = 0";
-                $answers_data = $wpdb->get_results( $answers_sql, 'ARRAY_A' );
+                $answer_data = $wpdb->get_results( $answers_sql, 'ARRAY_A' );
+                $result_nrs = explode(',', $answer_data[0]['result_nr']);
+                $disqualify_nrs = explode(',', $answer_data[0]['answer_dq_nr']);
+
+                foreach($result_nrs as $result_nr){
+                    $results[$result_nr] += 1;
+                }
+                foreach($disqualify_nrs as $disqualify_nr){
+                    $results[$disqualify_nr] += (-999);
+                }
+
+                /* 
                 foreach($answers_data as $key=>$answer){
                     if($answer['result_nr'] > 0)
                     $results[$answers_data[$key]['result_nr']] += 1;
                     else
                     $results[$answers_data[$key]['answer_dq_nr']] += (-999);
-                }
+                } */
             }
 
         }
@@ -92,21 +116,33 @@ function thatconverts_theguide_submit(){
             $answers_sql = "SELECT `result_nr`, `answer_dq_nr` FROM $answers_table WHERE question_id = $question_key AND number1 <= $answer AND number2 >= $answer";
             $answers_data = $wpdb->get_results( $answers_sql, 'ARRAY_A' );
             if(!empty($answers_data)){
-                foreach($answers_data as $key=>$answer){
-                    if($answer['result_nr'] > 0)
-                    $results[$answers_data[$key]['result_nr']] += 1;
-                    else
-                    $results[$answers_data[$key]['answer_dq_nr']] += (-999);
+                foreach($answers_data as $answer_data){
+                    $result_nrs = explode(',', $answer_data['result_nr']);
+                    $disqualify_nrs = explode(',', $answer_data['answer_dq_nr']);
+
+                    foreach($result_nrs as $result_nr){
+                        $results[$result_nr] += 1;
+                    }
+                    foreach($disqualify_nrs as $disqualify_nr){
+                        $results[$disqualify_nr] += (-999);
+                    }
                 }
             }
             //Select default answer if none of the conditions are met
             else{
                 $answers_sql = "SELECT `result_nr`, `answer_dq_nr` FROM $answers_table WHERE question_id = $question_key AND answer_nr = 0";
                 $answers_data = $wpdb->get_results( $answers_sql, 'ARRAY_A' );
-                if($answers_data[0]['result_nr'] > 0)
-                $results[$answers_data[0]['result_nr']] += 1;
-                else
-                $results[$answers_data[0]['answer_dq_nr']] += (-999);
+                foreach($answers_data as $answer_data){
+                    $result_nrs = explode(',', $answer_data['result_nr']);
+                    $disqualify_nrs = explode(',', $answer_data['answer_dq_nr']);
+
+                    foreach($result_nrs as $result_nr){
+                        $results[$result_nr] += 1;
+                    }
+                    foreach($disqualify_nrs as $disqualify_nr){
+                        $results[$disqualify_nr] += (-999);
+                    }
+                }
             }
 
 
@@ -114,6 +150,9 @@ function thatconverts_theguide_submit(){
     }
 
     //Calculation of input data
+    //remove all zeros first!
+    unset($results["0"]);
+
     $max_indexes = array_keys($results, max($results));
     $array = implode("','",$max_indexes);
 
@@ -139,7 +178,8 @@ function thatconverts_theguide_submit(){
         
         $results_html .= '</div>';
     } 
-        $results_html .=  '<p id="prev_last">'. __('Back to quiz', 'thatconverts_theguide').' </p>';
+    $results_html .=  '<div id="back_buttons"><p id="prev_last">'. __('Back to quiz', 'thatconverts_theguide').' </p>';
+    $results_html .=  '<p id="back_to_start">'. __('Back to start', 'thatconverts_theguide').' </p></div>';
 
     //Data collection (if selected so)
     if($_POST['quiz_collect']){

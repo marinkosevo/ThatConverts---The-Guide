@@ -42,15 +42,59 @@ jQuery(document).ready(function($) {
     });
 
     jQuery(document.body).on('click', '#prev_last', function() {
-            i--;
-            $(this).hide();
-            $('.counter_wrap').fadeIn(1000);
-            $('#question' + i).fadeIn(1000);
-            $('.result').hide();
-            $('.quiz_wrap').toggleClass('resultpage');
+        i--;
+        $('#back_buttons').hide();
+        $('#step' + i).addClass('active');
+        $('#step' + i).removeClass('done');
+        $('.counter_wrap').fadeIn(1000);
+        $('#question' + i).fadeIn(1000);
+        $('.result').hide();
+        $('.quiz_wrap').toggleClass('resultpage');
+        $('.results_wrap').remove();
+
+
+    })
+    jQuery(document.body).on('click', '#back_to_start', function() {
+        i = 1;
+        $('#back_buttons').hide();
+        $('.first_page').fadeIn(1000);
+        $('.mask').fadeIn(1000);
+        $('.mask2').fadeIn(1000);
+        $('.step').each(function() {
+            $(this).removeClass('done');
+            $(this).removeClass('active');
+        });
+        jQuery("input[type=radio]").each(function() {
+            $(this).prop('checked', false);
+
+        });
+        jQuery("input[type=checkbox]").each(function() {
+            $(this).prop('checked', false);
+
+        });
+        jQuery("input[type=text]").each(function() {
+            $(this).val('');
+        });
+        jQuery("input[type=number]").each(function() {
+            $(this).val('');
+        });
+        $(".next").each(function() {
+            $(this).prop('disabled', true);
+        });
+        $(".radio_container").each(function() {
+            $(this).removeClass('active');
 
         })
-        //End buttons
+
+
+        $('.result').hide();
+        $('.quiz_wrap').toggleClass('resultpage');
+        $('.results_wrap').remove();
+
+
+    })
+
+    //End buttons
 
     //Adding active class to answers
     jQuery("input[type=radio]").click(function() {
@@ -123,7 +167,7 @@ jQuery(document).ready(function($) {
                 $('#lottie').fadeOut(1000, function() {
                     jQuery('.quiz_wrap').append(JSON.parse(xhr.responseText));
                     jQuery('.quiz_wrap').toggleClass('resultpage');
-
+                    jQuery('.results_wrap').removeClass('hidden');
                 });
 
             } else {
