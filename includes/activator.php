@@ -101,6 +101,26 @@
 			ON DELETE CASCADE
 		) $charset_collate;" );
 
+		//wp_quiz_settings table
+		
+		$settings_table = $wpdb->prefix . 'quiz_settings';
+
+		$wpdb->query( "CREATE TABLE IF NOT EXISTS $settings_table (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			start_btn varchar(255) NOT NULL,
+			next_btn varchar(255) NOT NULL,
+			prev_btn varchar(255) NOT NULL,
+			submit_btn varchar(255) NOT NULL,
+			back_quiz varchar(255) NOT NULL,
+			back_start varchar(255) NOT NULL,
+			more_btn varchar(255) NOT NULL,
+			title_color varchar(255) NOT NULL,
+			desc_color varchar(255) NOT NULL,
+			btn_color varchar(255) NOT NULL,
+			UNIQUE KEY id (id),
+			PRIMARY KEY (id)
+		) $charset_collate;" );
+
 
 
 	

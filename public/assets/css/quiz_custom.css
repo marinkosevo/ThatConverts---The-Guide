@@ -30,7 +30,6 @@
 .quiz_wrap h1,
 .quiz_wrap h2,
 .quiz_wrap h3 {
-    color: #12008a;
     font-weight: bold;
 }
 
@@ -78,7 +77,6 @@
     opacity: 0.8;
     font-size: 24px;
     line-height: 1.33;
-    color: #3d366c;
 }
 
 .quiz_wrap .mask {
@@ -109,7 +107,6 @@
     color: #fff;
     outline-color: #fff;
     border-radius: 24px;
-    background-image: linear-gradient(to bottom, #6b7dff, #1600a9);
     width: 150px;
     align-self: center;
     -webkit-transition: all 0.3s linear;
@@ -130,12 +127,10 @@
 
 .quiz_wrap .quiz_btn:hover {
     color: #fff;
-    box-shadow: 0 10px 20px 0 rgba(107, 125, 255, 0.4);
 }
 
 .quiz_wrap .quiz_btn:focus {
     outline-color: transparent;
-    box-shadow: 0 2px 6px 0 rgba(107, 125, 255, 0.4);
 }
 
 .quiz_wrap .quiz_btn>a,
@@ -146,7 +141,7 @@
 }
 
 .quiz_btn:disabled {
-    background-color: rgba(107, 125, 255, 0.4);
+    opacity: 0.5;
 }
 
 .quiz_wrap #start_btn {
@@ -160,7 +155,6 @@
     margin: 0 0 1.41575em;
     font-size: 17px;
     line-height: 1.33;
-    color: #3a35cd;
     cursor: pointer;
     width: fit-content;
     align-self: center;
@@ -168,11 +162,6 @@
     -moz-transition: color 0.3s linear;
     -o-transition: color 0.3s linear;
     transition: color 0.3s linear;
-}
-
-.quiz_wrap .prev:hover,
-.quiz_wrap #prev_last:hover {
-    color: #6b7dff;
 }
 
 .quiz_wrap #prev_last,
@@ -189,19 +178,10 @@
 
 .quiz_wrap .step {
     margin-left: 10px;
-    background-color: rgba(107, 125, 255, 0.4);
     height: 10px;
     display: inline-block;
     width: 15%;
     border-radius: 5px;
-}
-
-.quiz_wrap .step.active {
-    background-color: #3a35cd;
-}
-
-.quiz_wrap .step.done {
-    background-color: #6b7dff;
 }
 
 .quiz_wrap .options {
@@ -252,19 +232,13 @@
     user-select: none;
     padding: 25px;
     border-radius: 20px;
-    border: solid 1px rgba(107, 125, 255, 0.4);
     -webkit-transition: box-shadow 0.3s linear;
     -moz-transition: box-shadow 0.3s linear;
     -o-transition: box-shadow 0.3s linear;
     transition: box-shadow 0.3s linear;
 }
 
-.quiz_wrap .radio_container:hover {
-    box-shadow: 0 10px 30px 0 rgba(107, 125, 255, 0.3);
-}
-
 .quiz_wrap .radio_container.active {
-    border: solid 2.5px #3a35cd;
     background-color: #ffffff;
 }
 
@@ -276,65 +250,21 @@
     width: 0;
 }
 
-.quiz_wrap .loader_container {
-    text-align: -webkit-center;
-    margin-top: 18%;
-}
-
-.quiz_wrap .loader {
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #1600a9;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    /* Safari */
-    animation: spin 2s linear infinite;
-}
-
 #quiz_form input[type='text'],
 #quiz_form input[type='email'],
 #quiz_form input[type='number'] {
     padding: 0;
     background-color: transparent;
     box-shadow: none;
-    border-bottom: 2px solid rgba(107, 125, 255, 0.4);
     margin-bottom: 50px;
     outline: none;
     font-size: 40px;
     font-weight: bold;
-    color: #3a35cd;
     text-align: center;
     -webkit-transition: all 0.3s linear;
     -moz-transition: all 0.3s linear;
     -o-transition: all 0.3s linear;
     transition: all 0.3s linear;
-}
-
-#quiz_form input[type='email']:focus,
-#quiz_form input[type='email']:hover,
-#quiz_form input[type='number']:focus,
-#quiz_form input[type='number']:hover,
-#quiz_form input[type='text']:focus,
-#quiz_form input[type='text']:hover {
-    border-color: #6b7dff;
-}
-
-#quiz_form ::placeholder {
-    color: rgba(107, 125, 255, 0.4);
-}
-
-#quiz_form :-ms-input-placeholder {
-    color: rgba(107, 125, 255, 0.4);
-}
-
-#quiz_form ::-ms-input-placeholder {
-    color: rgba(107, 125, 255, 0.4);
-}
-
-#quiz_form label {
-    opacity: 0.8;
-    color: #3d366c;
 }
 
 #quiz_form .email_wrap {
@@ -366,8 +296,8 @@
 }
 
 .option_container {
+    width: 20%;
     text-align: -webkit-center;
-    text-align: center;
     text-align: -moz-center;
 }
 
