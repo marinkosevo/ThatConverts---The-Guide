@@ -51,7 +51,7 @@ function thatconverts_shortcode($atts) {
     // Things that you want to do. 
    
     $quiz_page .= '<div class="quiz_wrap"><style>
-        .quiz_wrap .quiz_title, .quiz_wrap h1, .quiz_wrap h2 {
+        .quiz_wrap .quiz_title, .quiz_wrap h1, .quiz_wrap h2, .quiz_wrap h3 {
             color: '.$title_color.';
         }
         .quiz_wrap .quiz_desc, .quiz_wrap span, .quiz_wrap .description{
@@ -143,8 +143,10 @@ function thatconverts_shortcode($atts) {
     };
     $quiz_page .= '</div>';
     $quiz_page .= '<div class="first_page">
-                  <h1 class="quiz_title">'.$quiz_data[0]['name'].'</h1><br> 
-                  <p class="quiz_desc description">  '.$quiz_data[0]['description'].'</p><br>'; 
+                  <h2 class="quiz_title">'.$quiz_data[0]['name'].'</h2><br> 
+                  <p class="quiz_desc description">  '.$quiz_data[0]['description'].'</p>';
+    if(isset($quiz_data[0]['quiz_image'])) 
+    $quiz_page .= '<img src="'.$quiz_data[0]['quiz_image'].'" class="quiz_img">'; 
 
     $quiz_page .= '<button type="button" id="start_btn" class="quiz_btn">'.$start_btn.'<i class="button_icon"></i></button> 
                     </div>'; 

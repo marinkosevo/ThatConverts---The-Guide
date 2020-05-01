@@ -23,6 +23,7 @@
 			results_description varchar(255) DEFAULT '',
 			collect_results tinyint(1) DEFAULT '0',
 			collect_email tinyint(1) DEFAULT '0',
+			quiz_image varchar(255) NOT NULL,
 			email_description varchar(255) DEFAULT '',
 			createdAt datetime DEFAULT NULL,
 			UNIQUE KEY id (id),

@@ -185,7 +185,7 @@ function thatconverts_theguide_submit(){
         $i++;
         if($result['image'] != '')
         $results_html .= '<img src="'.$result['image'].'">';
-        $results_html .= '<div class="result_description"><h2>' .$result['title']. '</h2>';
+        $results_html .= '<div class="result_description"><h3>' .$result['title']. '</h3>';
         $results_html .= '<span>' .$result['description']. '</span></div>';
         if($result['link'] != '')
         $results_html .= '<a href="'.$result['link']. '"><button type="button" style="margin-top: 10px;" class="quiz_btn">'.$more_btn.'</button></a>';

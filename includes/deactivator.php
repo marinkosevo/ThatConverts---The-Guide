@@ -15,6 +15,6 @@
 		$wpdb->query( "DROP TABLE IF EXISTS $questions_table;" );
 		$wpdb->query( "DROP TABLE IF EXISTS $results_table;" );
 		$wpdb->query( "DROP TABLE IF EXISTS $anwsers_table;" );
-	
+ 
 
 	}

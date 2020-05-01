@@ -38,6 +38,10 @@
                                     <label for="description"><?php _e('Results page desription', 'thatconverts_theguide'); ?></label><br>
                                     <input type="text" class="form-control" name="results_description" placeholder="<?php _e('Enter results page description', 'thatconverts_theguide'); ?>">
                                 </div>
+                                <div class="form-group">
+                                    <label for="quiz_image">Quiz image (optional)</label><br>
+                                    <input type="file" name="quiz_image" accept="image/*">
+                                </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
@@ -116,6 +120,9 @@
 
     function create_quiz($data){
         global $wpdb;
+        $uploads = wp_upload_dir();
+        $upload_path = str_replace('\\', '/', $uploads['path']); // now how to get just the directory name?
+        $upload_url = str_replace('\\', '/', $uploads['url']); // now how to get just the directory name?
 
         //Quiz table insert
         $quiz_name = $data['name'];
@@ -134,7 +141,16 @@
             $email_description = $data['email_description'];
         else
             $email_description = '';
-            
+                    
+        //Check if image is set
+        if($_FILES['quiz_image']['name'] != ''){ 
+            $target_file = $upload_path .'/' . $_FILES['quiz_image']['name'];
+            $target_url = $upload_url .'/' . $_FILES['quiz_image']['name'];
+            move_uploaded_file($_FILES['quiz_image']['tmp_name'], $target_file);
+            }
+        else 
+            $target_url = '';
+                    
         $date = date("Y-m-d h:i:sa");
         $quiz_table = $wpdb->prefix.'quizzes';
         $questions_table = $wpdb->prefix.'quiz_questions';
@@ -147,6 +163,7 @@
             'results_description' => $results_description,
             'collect_results' => $collect_results,
             'collect_email' => $collect_email,
+            'quiz_image' => $target_url,
             'email_description' => $email_description,
             'createdAt' => $date
             ));
@@ -154,9 +171,6 @@
 
         //End Quiz table insert
         //Results table insert
-        $uploads = wp_upload_dir();
-        $upload_path = str_replace('\\', '/', $uploads['path']); // now how to get just the directory name?
-        $upload_url = str_replace('\\', '/', $uploads['url']); // now how to get just the directory name?
          if(isset($_POST['result'])){
             $results = $_POST['result'];
                 foreach($results as $result_key=>$result){
