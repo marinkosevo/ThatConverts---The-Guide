@@ -51,5 +51,7 @@ function quizEnqueueAdmin(){
     wp_enqueue_script( 'quiz_admin_custom_script', plugins_url( 'assets/js/quiz_admin_custom.js', __FILE__ ), array('jquery'), null );
     wp_enqueue_script( 'jscolor_script', plugins_url( 'assets/js/jscolor.js', __FILE__ ), array('jquery'), null );
     wp_enqueue_style( 'quiz_admin_custom_css',plugins_url( 'assets/css/quiz_admin_custom.css', __FILE__ ), array(), null );
+    wp_localize_script( 'quiz_admin_custom_script', 'ajax_admin_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+
     }
 }

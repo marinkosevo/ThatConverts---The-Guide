@@ -86,11 +86,9 @@ jQuery(document).ready(function($) {
 
         })
 
-
         $('.result').hide();
         $('.quiz_wrap').toggleClass('resultpage');
         $('.results_wrap').remove();
-
 
     })
 

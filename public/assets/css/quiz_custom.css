@@ -54,7 +54,7 @@
     overflow: hidden;
     transition: box-shadow 0.5s ease-in-out;
     transition: background-color 0.5s ease;
-    min-height: 50vh;
+    min-height: 700px;
 }
 
 .quiz_wrap.resultpage {
@@ -86,6 +86,8 @@
 
 .quiz_img {
     padding: 25px;
+    max-height: 400px;
+    width: auto;
 }
 
 .quiz_wrap .mask {
@@ -205,6 +207,7 @@
 
 .quiz_wrap .question_wrap {
     display: none;
+    min-height: 505px;
 }
 
 .quiz_wrap .question_wrap.active {
@@ -212,7 +215,7 @@
 }
 
 .quiz_wrap .first_page {
-    min-height: 35vh;
+    min-height: 505px;
     justify-content: space-between;
     flex-direction: column;
     display: flex;
@@ -311,6 +314,10 @@
     width: 20%;
     text-align: -webkit-center;
     text-align: -moz-center;
+}
+
+#quiz_form input.email {
+    margin-bottom: 20px;
 }
 
 

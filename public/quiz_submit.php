@@ -25,17 +25,17 @@ function thatconverts_theguide_submit(){
     $quiz_data = array();
 
     foreach($questions as $question_key=>$question){
-        $database_questions_sql = "SELECT * FROM $questions_table WHERE quiz_id = $question_key";
+        $database_questions_sql = "SELECT * FROM $questions_table WHERE id = $question_key";
         $database_questions = $wpdb->get_results( $database_questions_sql, 'ARRAY_A' );
     
-        $quiz_data[$question_key]['question_title'] = $question['name'];
-        $quiz_data[$question_key]['question_text'] = $question['question'];
+        $quiz_data[$question_key]['question_title'] = $database_questions[0]['name'];
+        $quiz_data[$question_key]['question_text'] = $database_questions[0]['question'];
 
         $answer = $question['answer'];
         if($question['type'] == 'selection'){
             if(isset($question['multiple_answers'])){
 
-                foreach($answer as $selected){
+                foreach($answer as $key => $selected){
                     $answer_sql = "SELECT * FROM $answers_table WHERE id = $selected";
                     $answer_data = $wpdb->get_results( $answer_sql, 'ARRAY_A' );
                     $result_nrs = explode(',', $answer_data[0]['result_nr']);
@@ -49,7 +49,9 @@ function thatconverts_theguide_submit(){
                         $results[$disqualify_nr] += (-999);
 
                     }
-                    $quiz_data[$question_key]['answer'] = $answer_data[0]['text'];
+                    if($key > 0)
+                        $quiz_data[$question_key]['answer'] .= ', ';
+                    $quiz_data[$question_key]['answer'] .= $answer_data[0]['text'];
                 }
             }
             else{
@@ -178,7 +180,7 @@ function thatconverts_theguide_submit(){
 
     $results_html = '';
     $i = 1;
-        $results_html .= '<div class="results_wrap"><h1>'.$result_description_data[0]['results_title'].'</h1><br> 
+        $results_html .= '<div class="results_wrap"><h2>'.$result_description_data[0]['results_title'].'</h2><br> 
                             <p class="description">  '.$result_description_data[0]['results_description'].'</p><br>';
     foreach($results_data as $result_key=>$result){
         $results_html .= '<div class="result" id="result'.$i.'">';

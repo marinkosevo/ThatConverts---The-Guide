@@ -408,3 +408,36 @@ function openTab(tabName) {
     document.getElementById(tabName + "_link").classList.add("active");
 
 }
+
+
+function export_csv(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', ajax_admin_object.ajax_url, true);
+    var data = new FormData();
+    data.append('id', id);
+    data.append('action', 'export_csv');
+    // Set up a handler for when the request finishes.
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log();
+            var response = JSON.parse(xhr.responseText);
+            var results = response.data;
+            var csv = 'Question title;Question description;Answer\n';
+            results.forEach(function(row) {
+                csv += row.join(';');
+                csv += "\n";
+            });
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + csv;
+            hiddenElement.target = '_blank';
+            hiddenElement.download = response.email + '.csv';
+            hiddenElement.click();
+
+        } else {
+            alert('An error occurred!');
+        }
+    };
+
+    xhr.send(data);
+
+}

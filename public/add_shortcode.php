@@ -224,7 +224,7 @@ function thatconverts_shortcode($atts) {
         $quiz_page .= '<div class="question_wrap" id="question'.$i.'">
                         <h3>' .$quiz_data[0]['email_description'] .'</h3>
                         <div class="answers_wrap">
-                            <input style="margin-bottom:10px;" type="text" class="email" placeholder="@" name="quiz_email">
+                            <input type="text" class="email" placeholder="@" name="quiz_email">
                             <div class="email_wrap">
                                 <input type="checkbox" id="email_contact" name="email_contact" value="1">
                                 <label for="email_contact">'.__('Use this email for contact purposes', 'thatconverts_theguide').'</label><br>
