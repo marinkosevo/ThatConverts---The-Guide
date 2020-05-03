@@ -40,7 +40,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="quiz_image">Quiz image (optional)</label><br>
-                                    <input type="file" name="quiz_image" accept="image/*">
+                                    <img class="quiz_img_preview" src=""/>
+                                    <input type="hidden" name="quiz_image">
+                                    <input type="button" class="button-primary img_upload" value="<?php esc_attr_e( 'Select a image', 'thatconverts_theguide' ); ?>">
                                 </div>
                         </div>
                         <div class="question">
@@ -137,20 +139,15 @@
             $collect_email = $data['collect_email'];
         else
             $collect_email = 0;
-        if(isset($data['email_description']))
+            if(isset($data['email_description']))
             $email_description = $data['email_description'];
         else
             $email_description = '';
-                    
-        //Check if image is set
-        if($_FILES['quiz_image']['name'] != ''){ 
-            $target_file = $upload_path .'/' . $_FILES['quiz_image']['name'];
-            $target_url = $upload_url .'/' . $_FILES['quiz_image']['name'];
-            move_uploaded_file($_FILES['quiz_image']['tmp_name'], $target_file);
-            }
-        else 
-            $target_url = '';
-                    
+        if(isset($data['quiz_image']))
+            $quiz_image = $data['quiz_image'];
+        else
+            $quiz_image = '';
+                                        
         $date = date("Y-m-d h:i:sa");
         $quiz_table = $wpdb->prefix.'quizzes';
         $questions_table = $wpdb->prefix.'quiz_questions';
@@ -163,7 +160,7 @@
             'results_description' => $results_description,
             'collect_results' => $collect_results,
             'collect_email' => $collect_email,
-            'quiz_image' => $target_url,
+            'quiz_image' => $quiz_image,
             'email_description' => $email_description,
             'createdAt' => $date
             ));
@@ -174,16 +171,7 @@
          if(isset($_POST['result'])){
             $results = $_POST['result'];
                 foreach($results as $result_key=>$result){
-                    //Check if image is set
-                    if($_FILES['result']['name'][$result_key]['image'] != ''){ 
-                        $target_file = $upload_path .'/' . $_FILES['result']['name'][$result_key]['image'];
-                        $target_url = $upload_url .'/' . $_FILES['result']['name'][$result_key]['image'];
-                        move_uploaded_file($_FILES['result']['tmp_name'][$result_key]['image'], $target_file);
-                        }
-                    else 
-                        $target_url = '';
-                    
-                    $result_values = "($quiz_id, $result_key, '$result[title]', '$result[description]', '$target_url', '$result[link]', '$date')";
+                    $result_values = "($quiz_id, $result_key, '$result[title]', '$result[description]', '$result[image]', '$result[link]', '$date')";
                     $wpdb->query("INSERT INTO $results_table
                     (`quiz_id`, `result_nr`, `title`, `description`, `image`, `link`, `createdAt`)
                     VALUES
@@ -238,15 +226,8 @@
                             foreach($answers as $key=>$answer){
 
                             //Check if image is set
-                                if(isset($_FILES['answers']['name'][$question_key][$key]['image'])){
-                                    if($_FILES['answers']['name'][$question_key][$key]['image'] != ''){ 
-                                        $target_file = $upload_path .'/' . $_FILES['answers']['name'][$question_key][$key]['image'];
-                                        $target_url = $upload_url .'/' . $_FILES['answers']['name'][$question_key][$key]['image'];
-                                        move_uploaded_file($_FILES['answers']['tmp_name'][$question_key][$key]['image'], $target_file);#
-                                        }
-                                    else 
-                                        $target_url = '';
-                                }
+                                if(!isset($answer['image']))
+                                    $answer['image'] = '';
                                 if(!isset($answer['answer_text']))
                                     $answer['answer_text'] = '';
                                 if(!isset($answer['disqualify']))
@@ -258,7 +239,7 @@
                                 else
                                     $answer['result'] = implode("," , $answer['result']);
                                 
-                                $answers_values = "($question_id, '$answer[result]', '$answer[answer_nr]', '$target_url', '$answer[disqualify]', '$answer[answer_text]', '$date')";
+                                $answers_values = "($question_id, '$answer[result]', '$answer[answer_nr]', '$answer[image]', '$answer[disqualify]', '$answer[answer_text]', '$date')";
                                 $query="INSERT INTO $answers_table
                                 (`question_id`, `result_nr`, `answer_nr`, `answer_icon`, `answer_dq_nr`, `text`, `createdAt`)
                                 VALUES
@@ -282,3 +263,14 @@
         }
 
     }
+    
+// Ajax action to refresh the user image
+add_action( 'wp_ajax_quiz_get_image', 'quiz_get_image'   );
+function quiz_get_image() {
+    if(isset($_GET['id']) ){
+        $image = wp_get_attachment_image_src( filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT ), 'thumbnail' );
+        wp_send_json_success( $image[0] );
+    } else {
+        wp_send_json_error();
+    }
+}

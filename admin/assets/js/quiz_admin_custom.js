@@ -236,7 +236,9 @@ jQuery(document).ready(function() {
                 </div>
                 <div class="form-group">
                     <label for="name">Image (optional)</label>
-                    <input type="file" name="result[` + r + `][image]" accept="image/*">
+                    <img class="quiz_img_preview" src=""/>
+                    <input type="hidden" name="result[` + r + `][image]">
+                    <input type="button" class="button-primary img_upload" value="Select a image">
                 </div>
                 <div class="form-group">
                     <label for="name">Link (optional)</label>
@@ -289,7 +291,10 @@ jQuery(document).ready(function() {
                 </div>
                     <div class="form-group">
                         <label for="name">Answer icon (optional)</label>
-                        <input type="file" name="answers[` + question_nr + `][` + j[question_nr] + `][image]" accept="image/*">
+                        <img class="quiz_img_preview" src=""/>
+                        <input type="hidden" name="answers[` + question_nr + `][` + j[question_nr] + `][image]">
+                        <input type="button" class="button-primary img_upload" value="Select a image">
+    
                         </div>` + logic_select + disqualify_select + `
                 </div>
 
@@ -421,7 +426,7 @@ function export_csv(id) {
         if (xhr.status === 200) {
             console.log();
             var response = JSON.parse(xhr.responseText);
-            var results = response.data;
+            var results = response.data.data;
             var csv = 'Question title;Question description;Answer\n';
             results.forEach(function(row) {
                 csv += row.join(';');
@@ -430,7 +435,7 @@ function export_csv(id) {
             var hiddenElement = document.createElement('a');
             hiddenElement.href = 'data:text/csv;charset=utf-8,' + csv;
             hiddenElement.target = '_blank';
-            hiddenElement.download = response.email + '.csv';
+            hiddenElement.download = response.data.email + '.csv';
             hiddenElement.click();
 
         } else {

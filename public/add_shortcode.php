@@ -1,4 +1,6 @@
 <?php
+
+
 function thatconverts_shortcode($atts) { 
     global $wpdb;
     //Tables
@@ -145,8 +147,10 @@ function thatconverts_shortcode($atts) {
     $quiz_page .= '<div class="first_page">
                   <h2 class="quiz_title">'.$quiz_data[0]['name'].'</h2><br> 
                   <p class="quiz_desc description">  '.$quiz_data[0]['description'].'</p>';
-    if(isset($quiz_data[0]['quiz_image'])) 
-    $quiz_page .= '<img src="'.$quiz_data[0]['quiz_image'].'" class="quiz_img">'; 
+    if(isset($quiz_data[0]['quiz_image'])) {
+        $img = wp_get_attachment_image_src($quiz_data[0]['quiz_image'], 'large');
+    $quiz_page .= '<img src="'.$img[0].'" class="quiz_img">'; 
+    }
 
     $quiz_page .= '<button type="button" id="start_btn" class="quiz_btn">'.$start_btn.'<i class="button_icon"></i></button> 
                     </div>'; 
@@ -188,9 +192,14 @@ function thatconverts_shortcode($atts) {
             $quiz_page .= '<div class="options">';
 
             foreach($answers_data as $answer){
+                
+                if(isset($answer['answer_icon'])) {
+                    $img = wp_get_attachment_image_src($answer['answer_icon'], 'thumbnail');
+                }
                 if($answer['result_nr'] > 0){
+                
                     $quiz_page .= '<div class="option_container">';
-                    $quiz_page .= '<label class="radio_container" style="background-image: url('.$answer['answer_icon'].')"><input type="'.$input.'" id="" name="'.$name.'" value="'.$answer['id'].'">
+                    $quiz_page .= '<label class="radio_container" style="background-image: url('.$img[0].')"><input type="'.$input.'" id="" name="'.$name.'" value="'.$answer['id'].'">
                     </label>';
                     $quiz_page .= '<span class="quiz_desc option_description">'.$answer['text'].'</span></div>';
 
@@ -198,7 +207,7 @@ function thatconverts_shortcode($atts) {
                 
                 else{
                     $quiz_page .= '<div class="option_container">';
-                    $quiz_page .= '<label class="radio_container" style="background-image: url('.$answer['answer_icon'].')"><input type="'.$input.'" id="" name="'.$name.'" value="-'.$answer['id'].'">
+                    $quiz_page .= '<label class="radio_container" style="background-image: url('.$img[0].')"><input type="'.$input.'" id="" name="'.$name.'" value="-'.$answer['id'].'">
                     </label>';
                     $quiz_page .= '<span class="quiz_desc option_description">'.$answer['text'].'</span></div>';
 

@@ -185,8 +185,10 @@ function thatconverts_theguide_submit(){
     foreach($results_data as $result_key=>$result){
         $results_html .= '<div class="result" id="result'.$i.'">';
         $i++;
-        if($result['image'] != '')
-        $results_html .= '<img src="'.$result['image'].'">';
+        if($result['image'] != ''){
+            $img = wp_get_attachment_image_src($result['image'], 'thumbnail');
+        $results_html .= '<img src="'.$img[0].'">';
+    }
         $results_html .= '<div class="result_description"><h3>' .$result['title']. '</h3>';
         $results_html .= '<span>' .$result['description']. '</span></div>';
         if($result['link'] != '')

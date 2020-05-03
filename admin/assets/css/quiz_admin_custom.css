@@ -107,3 +107,8 @@
 .quizForm_wrap .button_navigation {
     text-align: center;
 }
+
+.quiz_img_preview {
+    display: none;
+    max-height: 50px;
+}

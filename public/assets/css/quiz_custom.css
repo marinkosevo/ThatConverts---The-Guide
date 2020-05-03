@@ -297,7 +297,7 @@
     padding: 20px;
     color: #3d366c;
     margin-top: 20px;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .quiz_wrap .result img {

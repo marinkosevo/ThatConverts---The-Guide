@@ -62,8 +62,7 @@
         }
         $data['email'] = $email;
         $data['data'] = array_values($csv_fields);
-        echo json_encode($data);
-        wp_die();
+        wp_send_json_success($data);
     }
 //Check if WP_List_Table exists
 if ( ! class_exists( 'WP_List_Table' ) ) {
