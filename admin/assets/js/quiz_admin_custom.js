@@ -424,8 +424,8 @@ function export_csv(id) {
     // Set up a handler for when the request finishes.
     xhr.onload = function() {
         if (xhr.status === 200) {
-            console.log();
             var response = JSON.parse(xhr.responseText);
+
             var results = response.data.data;
             var csv = 'Question title;Question description;Answer\n';
             results.forEach(function(row) {
@@ -435,14 +435,54 @@ function export_csv(id) {
             var hiddenElement = document.createElement('a');
             hiddenElement.href = 'data:text/csv;charset=utf-8,' + csv;
             hiddenElement.target = '_blank';
-            hiddenElement.download = response.data.email + '.csv';
+            hiddenElement.download = response.data.email + '_result.csv';
             hiddenElement.click();
 
         } else {
             alert('An error occurred!');
         }
     };
-
     xhr.send(data);
+}
 
+
+function export_csv_all(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', ajax_admin_object.ajax_url, true);
+    var data = new FormData();
+    data.append('quiz_id', id);
+    data.append('action', 'export_csv');
+    // Set up a handler for when the request finishes.
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            data = response.data;
+
+            var header = response.data[0].quiz_data[0];
+            var csv = 'ID;Date;Email;';
+            Object.values(header).forEach(function(item, index) {
+                csv += item.question_title + ';';
+            });
+            csv += '\n';
+
+            data.forEach(function(row) {
+                csv += row.id + ';' + row.createdAt + ';' + row.email + ';';
+                row.quiz_data.forEach(function(question) {
+                    Object.values(question).forEach(function(answer) {
+                        csv += answer.answer + ';';
+                    });
+                });
+                csv += '\n';
+            });
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + csv;
+            hiddenElement.target = '_blank';
+            hiddenElement.download = 'Quiz_' + id + '.csv';
+            hiddenElement.click();
+
+        } else {
+            alert('An error occurred!');
+        }
+    };
+    xhr.send(data);
 }

@@ -13,10 +13,12 @@
             echo '<form method="GET">' ;
             $myListTable->prepare_items(); 
             ?>
+
             <form method="post">
             <input type="hidden" name="page" value="my_list_test" />
             <?php $myListTable->search_box('search', 'search_id'); ?>
             </form>
+            <button type="button" class="button action" onclick="export_csv_all(<?php echo $_GET['quiz']; ?>)">Export all as CSV</button>
             <?php
             $myListTable->display(); 
             echo '</form></div>';     
@@ -47,22 +49,42 @@
     function export_csv(){
         global $wpdb;
         $results_table = $wpdb->prefix.'quiz_data';
-        $result_id = $_POST['id'];
-        $results_sql = "SELECT * FROM $results_table WHERE id = $result_id";
-        $results_data = $wpdb->get_results( $results_sql, 'ARRAY_A' );
-        $email = $results_data[0]['email'];
-        $csv_fields=array();
+        if(isset($_POST['id'])){
+            $result_id = $_POST['id'];
+            $results_sql = "SELECT * FROM $results_table WHERE id = $result_id";
+            $results_data = $wpdb->get_results( $results_sql, 'ARRAY_A' );
+            $email = $results_data[0]['email'];
+            $csv_fields=array();
 
-        $results_data = unserialize($results_data[0]['quiz_data']);
-        foreach ($results_data as $key=>$fields) {
-            $csv_fields[$key] = array();
-            foreach($fields as $field){
-                array_push($csv_fields[$key], $field);
+            $results_data = unserialize($results_data[0]['quiz_data']);
+            foreach ($results_data as $key=>$fields) {
+                $csv_fields[$key] = array();
+                foreach($fields as $field){
+                    array_push($csv_fields[$key], $field);
+                }
             }
+            $data['email'] = $email;
+            $data['data'] = array_values($csv_fields);
+            wp_send_json_success($data);
         }
-        $data['email'] = $email;
-        $data['data'] = array_values($csv_fields);
-        wp_send_json_success($data);
+        else{
+            $result_id = $_POST['quiz_id'];
+            $results_sql = "SELECT * FROM $results_table WHERE quiz_id = $result_id";
+            $results_data = $wpdb->get_results( $results_sql, 'ARRAY_A' );
+            $csv_fields=array();
+
+            foreach ($results_data as $key=>$fields) {
+                $fields['quiz_data'] = unserialize($fields['quiz_data']);
+
+                foreach($fields as $key2=>$field){
+                    $csv_fields[$key][$key2] = array();
+                    array_push($csv_fields[$key][$key2], $field);
+                }
+            }
+            $data = array_values($csv_fields);
+            wp_send_json_success($data);
+
+        }
     }
 //Check if WP_List_Table exists
 if ( ! class_exists( 'WP_List_Table' ) ) {

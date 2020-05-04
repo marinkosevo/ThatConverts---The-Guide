@@ -158,12 +158,13 @@ jQuery(document).ready(function($) {
         // Set up a handler for when the request finishes.
         xhr.onload = function() {
             if (xhr.status === 200) {
-
+                console.log(xhr.response);
                 $('.counter_wrap').hide();
                 $('#question' + i).hide();
                 $('#lottie').fadeIn(500);
                 $('#lottie').fadeOut(1000, function() {
                     jQuery('.quiz_wrap').append(JSON.parse(xhr.responseText));
+                    jQuery('.quiz_wrap').append('<p id="prev_last">back</p>');
                     jQuery('.quiz_wrap').toggleClass('resultpage');
                     jQuery('.results_wrap').removeClass('hidden');
                 });

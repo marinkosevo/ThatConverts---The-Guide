@@ -195,23 +195,12 @@ function thatconverts_shortcode($atts) {
                 
                 if(isset($answer['answer_icon'])) {
                     $img = wp_get_attachment_image_src($answer['answer_icon'], 'thumbnail');
-                }
-                if($answer['result_nr'] > 0){
-                
+                }                
                     $quiz_page .= '<div class="option_container">';
                     $quiz_page .= '<label class="radio_container" style="background-image: url('.$img[0].')"><input type="'.$input.'" id="" name="'.$name.'" value="'.$answer['id'].'">
                     </label>';
                     $quiz_page .= '<span class="quiz_desc option_description">'.$answer['text'].'</span></div>';
 
-                }
-                
-                else{
-                    $quiz_page .= '<div class="option_container">';
-                    $quiz_page .= '<label class="radio_container" style="background-image: url('.$img[0].')"><input type="'.$input.'" id="" name="'.$name.'" value="-'.$answer['id'].'">
-                    </label>';
-                    $quiz_page .= '<span class="quiz_desc option_description">'.$answer['text'].'</span></div>';
-
-                }
             }
             $quiz_page .= '</div>';
         }
