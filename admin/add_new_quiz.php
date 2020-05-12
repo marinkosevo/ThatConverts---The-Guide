@@ -73,7 +73,7 @@
             <div class="section_wrap" id="Results" style="display:none">
                     <div id="results_accordion" class="collapse">
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new result (Max 5)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new result (Max 20)', 'thatconverts_theguide'); ?></label>
                             <button type="button" class="btn btn-default" id="add_result" aria-label="Left Align">+</button>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
             <div class="section_wrap" id="Questions" style="display:none">
                     <div id="questions_accordion" class="collapse">
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new question (Max 8)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new question (Max 10)', 'thatconverts_theguide'); ?></label>
                             <select name="question_type" id="question_type">
                                 <option value="" selected disabled hidden><?php _e('Type of question', 'thatconverts_theguide'); ?></option>
                                 <option value="selection"><?php _e('Multiple answer selection', 'thatconverts_theguide'); ?></option>
@@ -122,9 +122,6 @@
 
     function create_quiz($data){
         global $wpdb;
-        $uploads = wp_upload_dir();
-        $upload_path = str_replace('\\', '/', $uploads['path']); // now how to get just the directory name?
-        $upload_url = str_replace('\\', '/', $uploads['url']); // now how to get just the directory name?
 
         //Quiz table insert
         $quiz_name = $data['name'];
@@ -171,13 +168,15 @@
          if(isset($_POST['result'])){
             $results = $_POST['result'];
                 foreach($results as $result_key=>$result){
-                    $result_values = "($quiz_id, $result_key, '$result[title]', '$result[description]', '$result[image]', '$result[link]', '$date')";
-                    $wpdb->query("INSERT INTO $results_table
-                    (`quiz_id`, `result_nr`, `title`, `description`, `image`, `link`, `createdAt`)
-                    VALUES
-                    $result_values");   
-
-
+                    $result = $wpdb->insert($results_table, array(
+                        'quiz_id' => $quiz_id,
+                        'result_nr' => $result_key,
+                        'title' => $result['title'],
+                        'description' => $result['description'],
+                        'image' => $result['image'],
+                        'link' => $result['link'],
+                        'createdAt' => $date
+                        ));
                 }
             }
         //End results table insert
@@ -187,12 +186,17 @@
             foreach($questions as $question_key=>$question){
                 if(!isset($question['multiple_answers']))
                     $question['multiple_answers'] = 0;
-                $questions_values = "($quiz_id, '$question[title]', '$question[question_nr]', '$question[question]', '$question[question_type]', '$question[multiple_answers]', '$date')";
-                $wpdb->query("INSERT INTO $questions_table
-                (`quiz_id`, `name`, `question_nr`, `question`, `question_type`, `multiple_answers`, `createdAt`)
-                VALUES
-                $questions_values");
+                $result = $wpdb->insert($questions_table, array(
+                        'quiz_id' => $quiz_id,
+                        'name' => $question['title'],
+                        'question_nr' => $question['question_nr'],
+                        'question' => $question['question'],
+                        'question_type' => $question['question_type'],
+                        'multiple_answers' => $question['multiple_answers'],
+                        'createdAt' => $date
+                        ));
                 $question_id = $wpdb->insert_id;
+
                 
                 //Answers table insert
 
@@ -210,13 +214,16 @@
                                     $answer['result'] = 0;
                                 else
                                     $answer['result'] = implode("," , $answer['result']);
-
-                                $answers_values = "($question_id, '$answer[result]', '$answer[answer_nr]', '$answer[disqualify]', '$answer[answer_text]', '$answer[number1]', '$answer[number2]', '$date')";
-                                $query = "INSERT INTO $answers_table
-                                (`question_id`, `result_nr`, `answer_nr`, `answer_dq_nr`, `text`, `number1`, `number2`, `createdAt`)
-                                VALUES
-                                $answers_values";
-                                $wpdb->query($query);   
+                                $result = $wpdb->insert($answers_table, array(
+                                        'question_id' => $question_id,
+                                        'result_nr' => $answer['result'],
+                                        'answer_nr' => $answer['answer_nr'],
+                                        'answer_dq_nr' => $answer['disqualify'],
+                                        'text' => $answer['answer_text'],
+                                        'number1' => $answer['number1'],
+                                        'number2' => $answer['number2'],
+                                        'createdAt' => $date
+                                        ));
                             }
                         }
                     }
@@ -238,21 +245,21 @@
                                     $answer['result'] = 0;
                                 else
                                     $answer['result'] = implode("," , $answer['result']);
-                                
-                                $answers_values = "($question_id, '$answer[result]', '$answer[answer_nr]', '$answer[image]', '$answer[disqualify]', '$answer[answer_text]', '$date')";
-                                $query="INSERT INTO $answers_table
-                                (`question_id`, `result_nr`, `answer_nr`, `answer_icon`, `answer_dq_nr`, `text`, `createdAt`)
-                                VALUES
-                                $answers_values";   
-                                $wpdb->query($query);   
-
+                                $result = $wpdb->insert($answers_table, array(
+                                        'question_id' => $question_id,
+                                        'result_nr' => $answer['result'],
+                                        'answer_nr' => $answer['answer_nr'],
+                                        'answer_dq_nr' => $answer['disqualify'],
+                                        'answer_icon' => $answer['image'],
+                                        'text' => $answer['answer_text'],
+                                        'createdAt' => $date
+                                        ));
                             }
                         }
                     }   
  
                          
             }
-            $questions_values = substr($questions_values, 0, -1);
             //End Questions table insert
         }
  

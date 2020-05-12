@@ -17,7 +17,7 @@
 
 #lottie {
     background-color: #fff;
-    width: 75%;
+    width: 45%;
     height: 56%;
     margin: 0 auto;
     display: block;
@@ -31,10 +31,16 @@
 .quiz_wrap h2,
 .quiz_wrap h3 {
     font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
 .quiz_wrap h4 {
     font-size: 20px;
+    overflow-wrap: anywhere;
+}
+
+.quiz_wrap span {
+    overflow-wrap: anywhere;
 }
 
 .quiz_wrap input:focus {
@@ -54,7 +60,7 @@
     overflow: hidden;
     transition: box-shadow 0.5s ease-in-out;
     transition: background-color 0.5s ease;
-    min-height: 700px;
+    min-height: 500px;
 }
 
 .quiz_wrap.resultpage {
@@ -86,6 +92,7 @@
 
 .quiz_img {
     padding: 25px;
+    object-fit: contain;
     max-height: 400px;
     width: auto;
 }
@@ -200,14 +207,15 @@
 
 .quiz_wrap .options {
     display: inline-flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     padding-bottom: 50px;
     padding-top: 50px;
 }
 
 .quiz_wrap .question_wrap {
     display: none;
-    min-height: 505px;
+    min-height: 350px;
 }
 
 .quiz_wrap .question_wrap.active {
@@ -215,7 +223,7 @@
 }
 
 .quiz_wrap .first_page {
-    min-height: 505px;
+    min-height: 350px;
     justify-content: space-between;
     flex-direction: column;
     display: flex;
@@ -308,6 +316,7 @@
 
 .quiz_wrap .result_description {
     padding-left: 40px;
+    margin: 0 auto;
 }
 
 .option_container {
@@ -338,5 +347,40 @@
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .quiz_wrap .options {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .quiz_wrap .option_container {
+        text-align: center;
+        width: 100%;
+        padding-bottom: 25px;
+    }
+    .quiz_wrap .radio_container {
+        width: 400px;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .quiz_wrap .radio_container {
+        width: 200px;
+    }
+    .quiz_wrap .result {
+        height: fit-content;
+        width: fit-content;
+        display: block;
+        margin: 0 auto;
+    }
+    .quiz_wrap .result img {
+        margin: 0 auto;
+    }
+    .quiz_wrap .result_description {
+        padding: 0;
     }
 }

@@ -19,6 +19,8 @@
             $settings_data[0]['prev_btn'] = '';            
         if(!isset($settings_data[0]['submit_btn']))
             $settings_data[0]['submit_btn'] = '';            
+        if(!isset($settings_data[0]['email_description']))
+            $settings_data[0]['email_description'] = '';            
         if(!isset($settings_data[0]['title_color']))
             $settings_data[0]['title_color'] = '';            
         if(!isset($settings_data[0]['desc_color']))
@@ -79,6 +81,12 @@
                                 <div class="form-group">
                                     <label for="name"><?php _e('More here button', 'thatconverts_theguide'); ?></label><br>
                                     <input type="text" class="form-control" name="more_btn" value="<?php  echo (($settings_data[0]['more_btn'] != '')) ? $settings_data[0]['more_btn'] : 'More here'; ?>" placeholder="<?php _e('Enter "More here" button text', 'thatconverts_theguide'); ?>">
+                                </div>
+                        </div>
+                        <div class="question">
+                                <div class="form-group">
+                                    <label for="name"><?php _e('Use this email checkbox', 'thatconverts_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="email_description" value="<?php  echo (($settings_data[0]['email_description'] != '')) ? $settings_data[0]['email_description'] : 'Use this email for contact purposes'; ?>" placeholder="<?php _e('Enter "Use this email for contact purposes" button text', 'thatconverts_theguide'); ?>">
                                 </div>
                         </div>
                         <h2> <?php _e('Colors', 'thatconverts_theguide'); ?> </h2>
@@ -150,6 +158,10 @@
         $more_btn = $data['more_btn'];        
         if($more_btn == '')
             $more_btn = 'More here';
+
+        $email_description = $data['email_description'];        
+        if($email_description == '')
+            $email_description = 'Use this email for contact purposes';
             
         $title_color = $data['title_color'];
         $desc_color = $data['desc_color'];
@@ -165,6 +177,7 @@
             'back_quiz' => $back_quiz,
             'back_start' => $back_start,
             'more_btn' => $more_btn,
+            'email_description' => $email_description,
             'title_color' => ('#' .$title_color),
             'desc_color' => ('#' .$desc_color),
             'btn_color' => ('#' .$btn_color),

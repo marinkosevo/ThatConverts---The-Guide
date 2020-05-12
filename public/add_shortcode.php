@@ -35,6 +35,7 @@ function thatconverts_shortcode($atts) {
         $next_btn = $settings_data[0]['next_btn'] ;            
         $prev_btn = $settings_data[0]['prev_btn'] ;            
         $submit_btn = $settings_data[0]['submit_btn'] ;            
+        $email_description = $settings_data[0]['email_description'] ;            
         $title_color = $settings_data[0]['title_color'];            
         $desc_color = $settings_data[0]['desc_color'];            
         $btn_color = $settings_data[0]['btn_color'];            
@@ -43,7 +44,8 @@ function thatconverts_shortcode($atts) {
         $start_btn = 'Start quiz';            
         $next_btn = 'Next' ;            
         $prev_btn = 'Previous' ;            
-        $submit_btn = 'Submit' ;            
+        $submit_btn = 'Submit' ; 
+        $email_description = 'Use this email for contact purposes';        
         $title_color = '#12008a';            
         $desc_color = '#3d366c';            
         $btn_color = '#1600a9';
@@ -225,7 +227,7 @@ function thatconverts_shortcode($atts) {
                             <input type="text" class="email" placeholder="@" name="quiz_email">
                             <div class="email_wrap">
                                 <input type="checkbox" id="email_contact" name="email_contact" value="1">
-                                <label for="email_contact">'.__('Use this email for contact purposes', 'thatconverts_theguide').'</label><br>
+                                <label for="email_contact">'.__($email_description, 'thatconverts_theguide').'</label><br>
                             </div>
                          <p class="prev">'. __($prev_btn, 'thatconverts_theguide').' </p>
                         <button type="submit" class="quiz_btn next" id="quiz_submit" disabled>'. __($submit_btn, 'thatconverts_theguide').'<i class="button_icon"></i></button> 

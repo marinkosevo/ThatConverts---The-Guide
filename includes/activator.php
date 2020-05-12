@@ -115,6 +115,7 @@
 			back_quiz varchar(255) NOT NULL,
 			back_start varchar(255) NOT NULL,
 			more_btn varchar(255) NOT NULL,
+			email_description varchar (255) NOT NULL,
 			title_color varchar(255) NOT NULL,
 			desc_color varchar(255) NOT NULL,
 			btn_color varchar(255) NOT NULL,

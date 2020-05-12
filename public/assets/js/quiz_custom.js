@@ -126,7 +126,7 @@ jQuery(document).ready(function($) {
 
     jQuery("input[type=text]").on('input', (function() {
         if (jQuery(this).hasClass('email')) {
-            if (isValidEmailAddress(jQuery(this).val()))
+            if (isValidEmailAddress(jQuery(this).val()) && jQuery('#email_contact').is(':checked'))
                 jQuery(this).nextAll(".next").prop("disabled", false);
             else
                 jQuery(this).nextAll(".next").prop("disabled", true);
@@ -137,6 +137,14 @@ jQuery(document).ready(function($) {
                 jQuery(this).nextAll(".next").prop("disabled", true);
         }
     }));
+    jQuery("#email_contact").on('click', (function() {
+        if (isValidEmailAddress(jQuery('input[name="quiz_email"]').val()) && jQuery('#email_contact').is(':checked'))
+            jQuery(this).parent().nextAll(".next").prop("disabled", false);
+        else
+            jQuery(this).parent().nextAll(".next").prop("disabled", true);
+
+    }));
+
 
     jQuery("input[type=number]").on('input', (function() {
         if (jQuery(this).val() != '')
@@ -158,14 +166,12 @@ jQuery(document).ready(function($) {
         // Set up a handler for when the request finishes.
         xhr.onload = function() {
             if (xhr.status === 200) {
-                console.log(xhr.response);
+                jQuery('.quiz_wrap').toggleClass('resultpage');
                 $('.counter_wrap').hide();
                 $('#question' + i).hide();
                 $('#lottie').fadeIn(500);
                 $('#lottie').fadeOut(1000, function() {
                     jQuery('.quiz_wrap').append(JSON.parse(xhr.responseText));
-                    jQuery('.quiz_wrap').append('<p id="prev_last">back</p>');
-                    jQuery('.quiz_wrap').toggleClass('resultpage');
                     jQuery('.results_wrap').removeClass('hidden');
                 });
 

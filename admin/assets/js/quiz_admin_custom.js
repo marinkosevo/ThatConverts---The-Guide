@@ -1,6 +1,5 @@
 jQuery(document).ready(function() {
     let i = 1;
-    let r = 1;
     var j = new Array();
 
     jQuery('#first_next').click(function() {
@@ -53,6 +52,31 @@ jQuery(document).ready(function() {
             openTab('Questions');
             jQuery('#submit_btn').attr('disabled', false);
         }
+        if (jQuery('#results_number').val() != jQuery('.results').length) {
+            jQuery('.logic_select').each(function() {
+                var checkbox_nr = jQuery(this).find('checkbox_nr').val();
+                var logic_element = jQuery(this);
+                jQuery(this).find('.checkbox').remove();
+                jQuery(".results").each(function() {
+                    jQuery(logic_element).append(`<div class="checkbox"><input type="checkbox" id="answers` + checkbox_nr + `[result][` + i + `]" name="answers` + checkbox_nr + `[result][` + i + `]"  value="` + i + `">
+                <label for="answers` + checkbox_nr + `[result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`);
+                });
+
+            });
+            jQuery('.disqualify_select').each(function() {
+                var checkbox_nr = jQuery(this).find('checkbox_nr').val();
+                var disqualify_element = jQuery(this);
+                jQuery(this).find('.checkbox').remove();
+                jQuery(".results").each(function() {
+                    jQuery(disqualify_element).append(`<div class="checkbox"><input type="checkbox" id="answers` + checkbox_nr + `[disqualify][` + i + `]" name="answers` + checkbox_nr + `[disqualify][` + i + `]"  value="` + i + `">
+                <label for="answers` + checkbox_nr + `[disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`);
+                });
+
+            });
+        }
+
+
+
     });
 
     jQuery("#quiz_form").submit(function(e) {
@@ -114,46 +138,49 @@ jQuery(document).ready(function() {
         if (jQuery(".results").html() == undefined) {
             alert("Please add at least one quiz result before adding questions!");
         } else {
+            let question_nr = (jQuery('.question_wrap').length + 1);
+            if (question_nr == 10)
+                jQuery('#add_question').prop('disabled', true);
 
-            let question_type = jQuery(this).parent().find('#question_type').val();
+            var question_type = jQuery(this).parent().find('#question_type').val();
             var answer_select = `
         <div class="form-group add_answer_btn">
-        <input type="hidden" class="question_type" name="question[` + i + `][question_type]" value="` + jQuery("#question_type").val() + `">
-            <label for="button">Add new answer (Max 5)</label>
-            <button type="button" class="btn btn-default add_answer" value="` + i + `" aria-label="Left Align">+</button>
+        <input type="hidden" class="question_type" name="question[` + question_nr + `][question_type]" value="` + jQuery("#question_type").val() + `">
+            <label for="button">Add new answer (Max 8)</label>
+            <button type="button" class="btn btn-default add_answer" value="` + question_nr + `" aria-label="Left Align">+</button>
         </div>`;
             var answer_input = `
         <div class="form-group add_answer_btn">
-            <input type="hidden" class="question_type" name="question[` + i + `][question_type]" value="` + jQuery("#question_type").val() + `">
-            <label for="button">Add new condition (Max 5)</label>
-            <button type="button" class="btn btn-default add_answer" value="` + i + `" aria-label="Left Align">+</button>
+            <input type="hidden" class="question_type" name="question[` + question_nr + `][question_type]" value="` + jQuery("#question_type").val() + `">
+            <label for="button">Add new condition (Max 8)</label>
+            <button type="button" class="btn btn-default add_answer" value="` + question_nr + `" aria-label="Left Align">+</button>
         </div>`;
             if (question_type == "selection") {
                 jQuery(`
         <div class="form-group question_wrap">
             <div class="question_heading">
-            <input type="hidden" name="question[` + i + `][question_type]" value="` + question_type + `">
-            <input type="hidden" name="question[` + i + `][question_nr]" value="` + i + `">
-                <h3>Question ` + i + `</h3>
+            <input type="hidden" name="question[` + question_nr + `][question_type]" value="` + question_type + `">
+            <input type="hidden" name="question[` + question_nr + `][question_nr]" value="` + question_nr + `">
+                <h3>Question ` + question_nr + `</h3>
                 </a>
             </div>
-            <div id="question` + i + `" class="">
+            <div id="question` + question_nr + `" class="">
                 <div class="question">
                     <div class="form-group">
                         <label for="name">Multiple possible answers</label>
-                        <input type="radio" name="question[` + i + `][multiple_answers]" value="0" checked>
+                        <input type="radio" name="question[` + question_nr + `][multiple_answers]" value="0" checked>
                         <label>No</label>
-                        <input type="radio" name="question[` + i + `][multiple_answers]" value="1">
+                        <input type="radio" name="question[` + question_nr + `][multiple_answers]" value="1">
                         <label>Yes</label><br>
                     </div>
 
                     <div class="form-group">
                         <label for="name">Title</label>
-                        <input type="text" class="form-control question_text" name="question[` + i + `][title]" placeholder="Enter question title...">
+                        <input type="text" class="form-control question_text" name="question[` + question_nr + `][title]" placeholder="Enter question title...">
                     </div>
                     <div class="form-group">
                         <label for="name">Question</label>
-                        <input type="text" class="form-control question_text" name="question[` + i + `][question]" placeholder="Enter question text...">
+                        <input type="text" class="form-control question_text" name="question[` + question_nr + `][question]" placeholder="Enter question text...">
                     </div>
                 </div>
                 ` + answer_select + `
@@ -164,14 +191,14 @@ jQuery(document).ready(function() {
                 let j = 1;
 
                 logic = `<div class="form-group logic_select"><label>Select corresponding result</label>`;
-                disqualify_select = `<div class="form-group logic_select">
+                disqualify_select = `<div class="form-group disqualify_select">
                 <label>Select if this answer disqualifies a result</label>`;
 
                 jQuery(".results").each(function() {
-                    logic += `<div class="checkbox"><input type="checkbox" name="answers[` + i + `][0][result][` + j + `]"  value="` + j + `">
-                    <label for="answers[` + i + `][0][result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
-                    disqualify_select += `<div class="checkbox"><input type="checkbox" name="answers[` + i + `][0][disqualify][` + j + `]"  value="` + j + `">
-                    <label for="answers[` + i + `][0][disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
+                    logic += `<div class="checkbox"><input type="checkbox" name="answers[` + question_nr + `][0][result][` + j + `]"  value="` + j + `">
+                    <label for="answers[` + question_nr + `][0][result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
+                    disqualify_select += `<div class="checkbox"><input type="checkbox" name="answers[` + question_nr + `][0][disqualify][` + j + `]"  value="` + j + `">
+                    <label for="answers[` + question_nr + `][0][disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
                     j++;
                 });
                 logic += '</div>';
@@ -180,41 +207,39 @@ jQuery(document).ready(function() {
                 jQuery(`
             <div class="form-group question_wrap">
                 <div class="question_heading">
-                <input type="hidden" name="question[` + i + `][question_nr]" value="` + i + `">
-                    <h3>Question ` + i + `</h3>
+                <input type="hidden" name="question[` + question_nr + `][question_nr]" value="` + question_nr + `">
+                    <h3>Question ` + question_nr + `</h3>
                     </a>
                 </div>
                 <div class="question">
                     <div class="form-group">
                         <label for="name">Title</label>
-                        <input type="text" class="form-control question_text" name="question[` + i + `][title]" placeholder="Enter question title...">
+                        <input type="text" class="form-control question_text" name="question[` + question_nr + `][title]" placeholder="Enter question title...">
                     </div>
                     <div class="form-group">
                         <label for="name">Question</label>
-                        <input type="text" class="form-control question_text" name="question[` + i + `][question]" placeholder="Enter question text...">
+                        <input type="text" class="form-control question_text" name="question[` + question_nr + `][question]" placeholder="Enter question text...">
                     </div>
                 </div>
 
                     ` + answer_input + `
                     <h4>Default condition (if anything other than conditions is written)</h4>
-                    <div class="answer_wrap">
-                        <input type="hidden" name="answers[` + i + `][0][answer_nr]" value="0">
-                        <input type="hidden" name="answers[` + i + `][0][number1]" value="0">
-                        <input type="hidden" name="answers[` + i + `][0][number2]" value="0">
-                        <input type="hidden" name="answers[` + i + `][0][answer_text]" value="default">
+                    <div class="default_answer_wrap">
+                        <input type="hidden" name="answers[` + question_nr + `][0][answer_nr]" value="0">
+                        <input type="hidden" name="answers[` + question_nr + `][0][number1]" value="0">
+                        <input type="hidden" name="answers[` + question_nr + `][0][number2]" value="0">
+                        <input type="hidden" name="answers[` + question_nr + `][0][answer_text]" value="default">
                         ` + logic + `
                         ` + disqualify_select + `
-                        </div>
-        
-                        </div>
                     </div>
+        
+                </div>
+            </div>
                     
             </div>
             `).insertBefore(jQuery(this).parent());
             }
             //Disable after 8 questions (Maximum allowed)
-            if (i == 8)
-                jQuery('#add_question').prop('disabled', true);
             i++;
         }
     });
@@ -224,32 +249,31 @@ jQuery(document).ready(function() {
     jQuery("#add_result").click(function() {
         jQuery(`
         <div class="form-group results">
-                <h3>Result ` + r + `</h3>
-            <div id="result` + r + `" class="result">   
+                <h3>Result ` + (jQuery('.results').length + 1) + `</h3>
+            <div id="result` + (jQuery('.results').length + 1) + `" class="result">   
                 <div class="form-group">
                     <label for="name">Title</label>
-                    <input type="text" class="form-control result_title" name="result[` + r + `][title]" placeholder="Enter result title...">
+                    <input type="text" class="form-control result_title" name="result[` + (jQuery('.results').length + 1) + `][title]" placeholder="Enter result title...">
                 </div>
                 <div class="form-group">
                     <label for="name">Description</label>
-                    <input type="text" class="form-control result_description" name="result[` + r + `][description]" placeholder="Enter result text...">
+                    <input type="text" class="form-control result_description" name="result[` + (jQuery('.results').length + 1) + `][description]" placeholder="Enter result text...">
                 </div>
                 <div class="form-group">
                     <label for="name">Image (optional)</label>
                     <img class="quiz_img_preview" src=""/>
-                    <input type="hidden" name="result[` + r + `][image]">
+                    <input type="hidden" name="result[` + (jQuery('.results').length + 1) + `][image]">
                     <input type="button" class="button-primary img_upload" value="Select a image">
                 </div>
                 <div class="form-group">
                     <label for="name">Link (optional)</label>
-                    <input type="text" class="form-control" name="result[` + r + `][link]" placeholder="Enter result link...">
+                    <input type="text" class="form-control" name="result[` + (jQuery('.results').length + 1) + `][link]" placeholder="Enter result link...">
                 </div>
             </div>
         </div>
         `).insertBefore(jQuery(this).parent());
-        if (r == 5)
+        if (jQuery('.results').length == 20)
             jQuery('#add_result').prop('disabled', true);
-        r++;
     });
 
 
@@ -257,23 +281,21 @@ jQuery(document).ready(function() {
     jQuery(document.body).on('click', '.add_answer', function() {
         let type = jQuery(this).parent().find('.question_type').val();
         let question_nr = jQuery(this).val();
-        if (isNaN(j[question_nr]))
-            j[question_nr] = 1;
-        else
-            j[question_nr]++;
-        if (j[question_nr] == 5)
+        let ans_length = (jQuery(this).parent().parent().find('.answer_wrap').length + 1);
+
+        if (ans_length == 8)
             jQuery(this).prop('disabled', true);
 
-        let logic_select = `<div class="form-group logic_select"><label>Select corresponding result</label>`;
-        disqualify_select = `<div class="form-group logic_select">
+        var logic_select = `<div class="form-group logic_select"><label>Select corresponding result</label>`;
+        var disqualify_select = `<div class="form-group disqualify_select">
                                         <label>Select if this answer disqualifies a result</label>`;
 
         let i = 1;
         jQuery(".results").each(function() {
-            logic_select += `<div class="checkbox"><input type="checkbox" id="answers[` + question_nr + `][` + j[question_nr] + `][result][` + i + `]" name="answers[` + question_nr + `][` + j[question_nr] + `][result][` + i + `]"  value="` + i + `">
-            <label for="answers[` + question_nr + `][` + j[question_nr] + `][result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
-            disqualify_select += `<div class="checkbox"><input type="checkbox" id="answers[` + question_nr + `][` + j[question_nr] + `][disqualify][` + i + `]" name="answers[` + question_nr + `][` + j[question_nr] + `][disqualify][` + i + `]"  value="` + i + `">
-            <label for="answers[` + question_nr + `][` + j[question_nr] + `][disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
+            logic_select += `<div class="checkbox"><input type="checkbox" id="answers[` + question_nr + `][` + ans_length + `][result][` + i + `]" name="answers[` + question_nr + `][` + ans_length + `][result][` + i + `]"  value="` + i + `">
+            <label for="answers[` + question_nr + `][` + ans_length + `][result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
+            disqualify_select += `<div class="checkbox"><input type="checkbox" id="answers[` + question_nr + `][` + ans_length + `][disqualify][` + i + `]" name="answers[` + question_nr + `][` + ans_length + `][disqualify][` + i + `]"  value="` + i + `">
+            <label for="answers[` + question_nr + `][` + ans_length + `][disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
             i++;
         });
         logic_select += '</div>';
@@ -282,23 +304,22 @@ jQuery(document).ready(function() {
         //Type of answer selection
         if (type == "selection") {
             jQuery(`
-            <h4>Answer ` + j[question_nr] + `</h4>
-            <div class="answer_wrap" id="answer` + question_nr + `-` + j[question_nr] + `">
+            <h4>Answer ` + ans_length + `</h4>
+            <div class="answer_wrap" id="answer` + question_nr + `-` + ans_length + `">
                 <div class="form-group">
                     <label for="logic">Answer</label>
-                    <input type="hidden" name="answers[` + question_nr + `][` + j[question_nr] + `][answer_nr]" value="` + j[question_nr] + `">
-                    <input type="text" class="form-control answer_text" name="answers[` + question_nr + `][` + j[question_nr] + `][answer_text]" placeholder="Enter answer text...">
+                    <input type="hidden" name="answers[` + question_nr + `][` + ans_length + `][answer_nr]" value="` + ans_length + `">
+                    <input type="text" class="form-control answer_text" name="answers[` + question_nr + `][` + ans_length + `][answer_text]" placeholder="Enter answer text...">
                 </div>
                     <div class="form-group">
                         <label for="name">Answer icon (optional)</label>
                         <img class="quiz_img_preview" src=""/>
-                        <input type="hidden" name="answers[` + question_nr + `][` + j[question_nr] + `][image]">
+                        <input type="hidden" name="answers[` + question_nr + `][` + ans_length + `][image]">
                         <input type="button" class="button-primary img_upload" value="Select a image">
     
                         </div>` + logic_select + disqualify_select + `
                 </div>
-
-                </div>
+            </div>
             </div>`).insertBefore(jQuery(this).parent());
         }
         //Type of answer text input
@@ -306,12 +327,12 @@ jQuery(document).ready(function() {
             if (type == "text") {
                 var input = 'text';
                 jQuery(`
-                <h4>Condition ` + j[question_nr] + ` </h4>
-                <div class="answer_wrap" id="condition` + question_nr + `-` + j[question_nr] + `">
+                <h4>Condition ` + ans_length + ` </h4>
+                <div class="answer_wrap" id="condition` + question_nr + `-` + ans_length + `">
                     <div class="form-group">
                         <label for="logic">If input is: </label>
-                        <input type="hidden" name="answers[` + question_nr + `][` + j[question_nr] + `][answer_nr]" value="` + j[question_nr] + `">
-                        <input type="` + input + `" class="form-control answer_text" name="answers[` + question_nr + `][` + j[question_nr] + `][answer_text]" placeholder="Enter answer text...">
+                        <input type="hidden" name="answers[` + question_nr + `][` + ans_length + `][answer_nr]" value="` + ans_length + `">
+                        <input type="` + input + `" class="form-control answer_text" name="answers[` + question_nr + `][` + ans_length + `][answer_text]" placeholder="Enter answer text...">
                         </div>
                     ` + logic_select + disqualify_select + `    
                 </div>`).insertBefore(jQuery(this).parent());
@@ -320,14 +341,14 @@ jQuery(document).ready(function() {
                 var input = 'number';
 
                 jQuery(`
-                <h4>Condition ` + j[question_nr] + `</h4>
-                <div class="answer_wrap" id="condition` + question_nr + `-` + j[question_nr] + `">
+                <h4>Condition ` + ans_length + `</h4>
+                <div class="answer_wrap" id="condition` + question_nr + `-` + ans_length + `">
                     <div class="form-group">
                         <label for="logic">If input is between: </label>
-                        <input type="hidden" name="answers[` + question_nr + `][` + j[question_nr] + `][answer_nr]" value="` + j[question_nr] + `">
-                        <input type="` + input + `" class="form-control answer_text" name="answers[` + question_nr + `][` + j[question_nr] + `][number1]" placeholder="Enter answer number...">
+                        <input type="hidden" name="answers[` + question_nr + `][` + ans_length + `][answer_nr]" value="` + ans_length + `">
+                        <input type="` + input + `" class="form-control answer_text" name="answers[` + question_nr + `][` + ans_length + `][number1]" placeholder="Enter answer number...">
                          and 
-                        <input type="` + input + `" class="form-control answer_text" name="answers[` + question_nr + `][` + j[question_nr] + `][number2]" placeholder="Enter answer number...">
+                        <input type="` + input + `" class="form-control answer_text" name="answers[` + question_nr + `][` + ans_length + `][number2]" placeholder="Enter answer number...">
                     </div>
                     ` + logic_select + disqualify_select + `    
                     </div>
@@ -356,10 +377,10 @@ jQuery(document).ready(function() {
 
             jQuery('.logic_select').html('');
             jQuery(".result_title").each(function() {
-                new_logic_select += `<input type="checkbox" name="answers[` + question_nr + `][` + j[question_nr] + `][result][` + counter + `]"  value="` + i + `">
-                <label for="answers[` + question_nr + `][` + j[question_nr] + `][result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label><br>`;
-                new_disqualify_select += `<input type="checkbox" name="answers[` + question_nr + `][` + j[question_nr] + `][disqualify][` + i + `]"  value="` + i + `">
-                <label for="answers[` + question_nr + `][` + j[question_nr] + `][disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label><br>`;
+                new_logic_select += `<input type="checkbox" name="answers[` + question_nr + `][` + ans_length + `][result][` + counter + `]"  value="` + i + `">
+                <label for="answers[` + question_nr + `][` + ans_length + `][result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label><br>`;
+                new_disqualify_select += `<input type="checkbox" name="answers[` + question_nr + `][` + ans_length + `][disqualify][` + i + `]"  value="` + i + `">
+                <label for="answers[` + question_nr + `][` + ans_length + `][disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label><br>`;
                 counter++;
             });
             jQuery('.logic_select').html(new_select);
