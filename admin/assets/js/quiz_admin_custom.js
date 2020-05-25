@@ -1,7 +1,6 @@
 jQuery(document).ready(function() {
-    let i = 1;
     var j = new Array();
-
+    var i = 1;
     jQuery('#first_next').click(function() {
         var empty = 0;
         jQuery(".quiz_heading input[type=text]:not(:disabled)").each(function() {
@@ -52,24 +51,26 @@ jQuery(document).ready(function() {
             openTab('Questions');
             jQuery('#submit_btn').attr('disabled', false);
         }
-        if (jQuery('#results_number').val() != jQuery('.results').length) {
+        if (localStorage.delete == 1) {
             jQuery('.logic_select').each(function() {
-                var checkbox_nr = jQuery(this).find('checkbox_nr').val();
+                var x = 1;
+                var checkbox_nr = jQuery(this).find('.checkbox_nr').val();
                 var logic_element = jQuery(this);
                 jQuery(this).find('.checkbox').remove();
                 jQuery(".results").each(function() {
-                    jQuery(logic_element).append(`<div class="checkbox"><input type="checkbox" id="answers` + checkbox_nr + `[result][` + i + `]" name="answers` + checkbox_nr + `[result][` + i + `]"  value="` + i + `">
-                <label for="answers` + checkbox_nr + `[result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`);
+                    jQuery(logic_element).append(`<div class="checkbox"><input type="checkbox" id="answers` + checkbox_nr + `[result][` + x + `]" name="answers` + checkbox_nr + `[result][` + x + `]"  value="` + x + `">
+                <label for="answers` + checkbox_nr + `[result][` + x + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`);
                 });
 
             });
             jQuery('.disqualify_select').each(function() {
-                var checkbox_nr = jQuery(this).find('checkbox_nr').val();
+                var x = 1;
+                var checkbox_nr = jQuery(this).find('.checkbox_nr').val();
                 var disqualify_element = jQuery(this);
                 jQuery(this).find('.checkbox').remove();
                 jQuery(".results").each(function() {
-                    jQuery(disqualify_element).append(`<div class="checkbox"><input type="checkbox" id="answers` + checkbox_nr + `[disqualify][` + i + `]" name="answers` + checkbox_nr + `[disqualify][` + i + `]"  value="` + i + `">
-                <label for="answers` + checkbox_nr + `[disqualify][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`);
+                    jQuery(disqualify_element).append(`<div class="checkbox"><input type="checkbox" id="answers` + checkbox_nr + `[disqualify][` + x + `]" name="answers` + checkbox_nr + `[disqualify][` + x + `]"  value="` + x + `">
+                <label for="answers` + checkbox_nr + `[disqualify][` + x + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`);
                 });
 
             });
@@ -81,7 +82,7 @@ jQuery(document).ready(function() {
 
     jQuery("#quiz_form").submit(function(e) {
         e.preventDefault();
-
+        localStorage.delete = 0;
         var empty = 0;
         var results = 0;
         //Check if there are any questions added
@@ -138,9 +139,13 @@ jQuery(document).ready(function() {
         if (jQuery(".results").html() == undefined) {
             alert("Please add at least one quiz result before adding questions!");
         } else {
-            let question_nr = (jQuery('.question_wrap').length + 1);
-            if (question_nr == 10)
+            var question_nr = (jQuery('.question_wrap').length + 1);
+            if ((jQuery('.question_wrap').length + 1) == 10)
                 jQuery('#add_question').prop('disabled', true);
+            while (jQuery('input[name="question[' + question_nr + '][question_type]"]').length) {
+                question_nr++;
+            }
+
 
             var question_type = jQuery(this).parent().find('#question_type').val();
             var answer_select = `
@@ -161,9 +166,9 @@ jQuery(document).ready(function() {
             <div class="question_heading">
             <input type="hidden" name="question[` + question_nr + `][question_type]" value="` + question_type + `">
             <input type="hidden" name="question[` + question_nr + `][question_nr]" value="` + question_nr + `">
-                <h3>Question ` + question_nr + `</h3>
-                </a>
+                <h3>Question </h3>
             </div>
+            <button type="button" class="delete">Delete</button>
             <div id="question` + question_nr + `" class="">
                 <div class="question">
                     <div class="form-group">
@@ -188,7 +193,7 @@ jQuery(document).ready(function() {
         </div>
         `).insertBefore(jQuery(this).parent());
             } else {
-                let j = 1;
+                var j = 1;
 
                 logic = `<div class="form-group logic_select"><label>Select corresponding result</label>`;
                 disqualify_select = `<div class="form-group disqualify_select">
@@ -247,27 +252,33 @@ jQuery(document).ready(function() {
     //Dynamically adding quiz results
 
     jQuery("#add_result").click(function() {
+        localStorage.delete = 1;
+        var i = jQuery('.results').length + 1;
+        while (jQuery('input[name="result[' + i + '][title]"]').length) {
+            i++;
+        }
+
         jQuery(`
         <div class="form-group results">
-                <h3>Result ` + (jQuery('.results').length + 1) + `</h3>
-            <div id="result` + (jQuery('.results').length + 1) + `" class="result">   
+                <h3>Result </h3> <button type="button" class="delete">Delete</button>
+            <div id="result` + i + `" class="result">   
                 <div class="form-group">
                     <label for="name">Title</label>
-                    <input type="text" class="form-control result_title" name="result[` + (jQuery('.results').length + 1) + `][title]" placeholder="Enter result title...">
+                    <input type="text" class="form-control result_title" name="result[` + i + `][title]" placeholder="Enter result title...">
                 </div>
                 <div class="form-group">
                     <label for="name">Description</label>
-                    <input type="text" class="form-control result_description" name="result[` + (jQuery('.results').length + 1) + `][description]" placeholder="Enter result text...">
+                    <input type="text" class="form-control result_description" name="result[` + i + `][description]" placeholder="Enter result text...">
                 </div>
                 <div class="form-group">
                     <label for="name">Image (optional)</label>
                     <img class="quiz_img_preview" src=""/>
-                    <input type="hidden" name="result[` + (jQuery('.results').length + 1) + `][image]">
+                    <input type="hidden" name="result[` + i + `][image]">
                     <input type="button" class="button-primary img_upload" value="Select a image">
                 </div>
                 <div class="form-group">
                     <label for="name">Link (optional)</label>
-                    <input type="text" class="form-control" name="result[` + (jQuery('.results').length + 1) + `][link]" placeholder="Enter result link...">
+                    <input type="text" class="form-control" name="result[` + i + `][link]" placeholder="Enter result link...">
                 </div>
             </div>
         </div>
@@ -279,9 +290,9 @@ jQuery(document).ready(function() {
 
     //Dymnamically adding answers   
     jQuery(document.body).on('click', '.add_answer', function() {
-        let type = jQuery(this).parent().find('.question_type').val();
-        let question_nr = jQuery(this).val();
-        let ans_length = (jQuery(this).parent().parent().find('.answer_wrap').length + 1);
+        var type = jQuery(this).parent().find('.question_type').val();
+        var question_nr = jQuery(this).val();
+        var ans_length = (jQuery(this).parent().parent().find('.answer_wrap').length + 1);
 
         if (ans_length == 8)
             jQuery(this).prop('disabled', true);
@@ -290,7 +301,7 @@ jQuery(document).ready(function() {
         var disqualify_select = `<div class="form-group disqualify_select">
                                         <label>Select if this answer disqualifies a result</label>`;
 
-        let i = 1;
+        var i = 1;
         jQuery(".results").each(function() {
             logic_select += `<div class="checkbox"><input type="checkbox" id="answers[` + question_nr + `][` + ans_length + `][result][` + i + `]" name="answers[` + question_nr + `][` + ans_length + `][result][` + i + `]"  value="` + i + `">
             <label for="answers[` + question_nr + `][` + ans_length + `][result][` + i + `]"> ` + jQuery(this).find('.result_title').val() + `</label></div>`;
@@ -415,6 +426,16 @@ jQuery(document).ready(function() {
             jQuery('.email').css("display", "none");
 
         }
+    });
+    jQuery(document.body).on('click', '.delete', function() {
+        localStorage.delete = 1;
+        jQuery(this).parent().remove();
+        if (jQuery('.results').length < 20)
+            jQuery('#add_result').prop('disabled', false);
+        if (jQuery('.question_wrap').length < 10)
+            jQuery('#add_question').prop('disabled', false);
+
+
     });
 
 });

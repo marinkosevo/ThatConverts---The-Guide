@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    let i = 1;
+    var i = 1;
     //Quiz start
     $("#start_btn").click(function() {
         $(this).parent().hide();

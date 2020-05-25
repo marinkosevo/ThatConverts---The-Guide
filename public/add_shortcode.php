@@ -133,7 +133,13 @@ function thatconverts_shortcode($atts) {
             opacity: 0.8;
             color: '.$btn_color.';
         }
+        .quiz_wrap .mask {
+            background-color: rgba('.$hex_btn.', 1);
+        }
         
+        .quiz_wrap .mask2 {
+            background-color: rgba('.$hex_btn.', 0.1);
+        }
     </style>
     '; 
     $quiz_page .= '<div class="mask"></div>';

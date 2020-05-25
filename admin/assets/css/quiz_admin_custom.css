@@ -80,10 +80,6 @@
     padding: 10px;
 }
 
-.quizForm_wrap input.form-control {
-    max-height: 20px;
-}
-
 .quizForm_wrap .result,
 .quizForm_wrap .question,
 .quizForm_wrap .answer_wrap {

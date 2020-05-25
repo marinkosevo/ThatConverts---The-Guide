@@ -98,21 +98,22 @@
 }
 
 .quiz_wrap .mask {
-    background: url('../images/mask.png');
     width: 348px;
     height: 335px;
     position: absolute;
-    top: -191px;
-    right: -159px;
+    top: -185px;
+    right: -260px;
+    border-radius: 33% 67% 17% 83% / 71% 22% 78% 29%;
+    transform: rotate(19deg);
 }
 
 .quiz_wrap .mask2 {
-    background: url('../images/mask2.png');
     width: 491px;
     height: 335px;
     position: absolute;
-    bottom: -166px;
-    left: -107px;
+    bottom: -225px;
+    left: -216px;
+    border-radius: 85% 15% 27% 73% / 28% 57% 43% 72%;
 }
 
 .quiz_wrap .quiz_btn {
@@ -213,6 +214,18 @@
     padding-top: 50px;
 }
 
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+    .quiz_wrap .options {
+        justify-content: space-around;
+    }
+}
+
+_:-ms-lang(x),
+.quiz_wrap .options {
+    justify-content: space-around;
+}
+
 .quiz_wrap .question_wrap {
     display: none;
     min-height: 350px;
@@ -259,6 +272,7 @@
     -moz-transition: box-shadow 0.3s linear;
     -o-transition: box-shadow 0.3s linear;
     transition: box-shadow 0.3s linear;
+    margin: 0 auto;
 }
 
 .quiz_wrap .radio_container.active {

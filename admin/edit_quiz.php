@@ -26,7 +26,7 @@
     $questions_sql = "SELECT * FROM $questions_table WHERE quiz_id = $quiz_id";
     $questions_data = $wpdb->get_results( $questions_sql, 'ARRAY_A' );
 
-    $results_sql = "SELECT * FROM $results_table WHERE quiz_id = $quiz_id";
+    $results_sql = "SELECT * FROM $results_table WHERE quiz_id = $quiz_id ORDER BY result_nr";
     $results_data = $wpdb->get_results( $results_sql, 'ARRAY_A' );
 
     $setting_sql = "SELECT * FROM $settings_table";
@@ -43,9 +43,8 @@
                     <li><a class="nav_links" id="Questions_link" ><?php _e('Questions', 'thatconverts_theguide'); ?></a></li>
                 </ul>
             </div>
-            <form action="admin.php?page=thatconverts&action=edit&quiz=<?php echo $_GET['quiz'];?>" id="quiz_form" method="post" enctype="multipart/form-data">
+            <form action="admin.php?page=thatconverts&action=edit&quiz=<?php echo $quiz_id;?>" id="quiz_form" method="post" enctype="multipart/form-data">
             <div class="section_wrap" id="Quiz">
-
                 <div class="quiz_heading">
 
                         <div class="question">
@@ -108,7 +107,8 @@
                     
                     ?>
                         <div class="form-group results">
-                            <h3>Result <?php echo $result['result_nr'];?></h3>
+                            <h3>Result </h3>
+                            <button type="button" class="delete">Delete</button>
                             <div id="result<?php echo $result['result_nr'];?>" class="result">   
                                 <div class="form-group">
                                     <label for="name"><?php _e('Title', 'thatconverts_theguide'); ?></label>
@@ -134,7 +134,7 @@
                         }
                     ?>
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new result (Max 5)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new result (Max 20)', 'thatconverts_theguide'); ?></label>
                             <button type="button" class="btn btn-default" id="add_result" aria-label="Left Align">+</button>
                         </div>
                     </div>
@@ -157,9 +157,10 @@
                         <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_type]" value="<?php echo $question['question_type'];?>">
                         <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_nr]" value="<?php echo $question['question_nr'];?>">
                         <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_id]" value="<?php echo $question['id'];?>">
-                            <h3><?php _e('Question', 'thatconverts_theguide'); ?><?php echo $question['question_nr'];?></h3>
+                            <h3><?php _e('Question', 'thatconverts_theguide'); ?></h3>
                             </a>
                         </div>
+                        <button type="button" class="delete">Delete</button>
                         <div id="question<?php echo $question['question_nr'];?>" class="">
                             <div class="question">
                                 <div class="form-group">
@@ -242,7 +243,7 @@
                             ?>
                             <div class="form-group add_answer_btn">
                             <input type="hidden" class="question_type" name="question[<?php echo $question['question_nr'];?>][question_type]" value="<?php echo $question['question_type'];?>">
-                                <label for="button"><?php _e('Add new answer (Max 5)', 'thatconverts_theguide'); ?></label>
+                                <label for="button"><?php _e('Add new answer (Max 8)', 'thatconverts_theguide'); ?></label>
                                 <button type="button" class="btn btn-default add_answer" value="<?php echo $question['question_nr'];?>" aria-label="Left Align">+</button>
                             </div>
                         </div>
@@ -294,9 +295,9 @@
                             <div class="question_heading">
                             <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_id]" value="<?php echo $question['id'];?>">
                             <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_nr]" value="<?php echo $question['question_nr'];?>">
-                                <h3><?php _e('Question', 'thatconverts_theguide'); ?> <?php echo $question['question_nr'];?></h3>
-                                </a>
+                                <h3><?php _e('Question', 'thatconverts_theguide'); ?></h3>
                             </div>
+                            <button type="button" class="delete">Delete</button>
                             <div class="question">
                                 <div class="form-group">
                                     <label for="name"><?php _e('Title', 'thatconverts_theguide'); ?></label>
@@ -374,7 +375,7 @@
                             ?>
                             <div class="form-group add_answer_btn">
                                 <input type="hidden" class="question_type" name="question[<?php echo $question['question_nr'];?>][question_type]" value="<?php echo $question['question_type'];?>">
-                                <label for="button"><?php _e('Add new condition (Max 5)', 'thatconverts_theguide'); ?></label>
+                                <label for="button"><?php _e('Add new condition (Max 8)', 'thatconverts_theguide'); ?></label>
                                 <button type="button" class="btn btn-default add_answer" value="<?php echo $question['question_nr'];?>" aria-label="Left Align">+</button>
                             </div>
                                 <h4><?php _e('Default condition (if anything other than conditions is written)', 'thatconverts_theguide'); ?></h4>
@@ -393,7 +394,7 @@
                         }
                     ?>
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new question (Max 8)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new question (Max 10)', 'thatconverts_theguide'); ?></label>
                             <select name="question_type" id="question_type">
                                 <option value="" selected disabled hidden><?php _e('Type of question', 'thatconverts_theguide'); ?></option>
                                 <option value="selection"><?php _e('Multiple answer selection', 'thatconverts_theguide'); ?></option>
@@ -454,7 +455,17 @@
         $questions_table = $wpdb->prefix.'quiz_questions';
         $answers_table = $wpdb->prefix.'quiz_answers';
         $results_table = $wpdb->prefix.'quiz_results';
-        $result = $wpdb->update($quiz_table, array(
+        $quiz_id =  $_GET['quiz']; 
+
+        $result = $wpdb->delete($results_table, 
+        array( 'quiz_id' => $quiz_id ));
+
+        $result = $wpdb->delete($questions_table, 
+        array( 'quiz_id' => $quiz_id ));
+
+        $result = $wpdb->delete($quiz_table, array( 'id' => $quiz_id ));
+        $result = $wpdb->insert($quiz_table, array(
+            'id' => $quiz_id,
             'name' => $quiz_name,
             'description' => $quiz_description,
             'results_title' => $results_title,
@@ -464,34 +475,33 @@
             'quiz_image' => $quiz_image,
             'email_description' => $email_description,
             'createdAt' => $date
-            ),
-            array( 'id' => $_GET['quiz'] ));
+            ));
+
 
          //End Quiz table insert
         //Results table insert
          if(isset($_POST['result'])){
             $results = $_POST['result'];
                 foreach($results as $result_key=>$result){
-                    $result = $wpdb->update($results_table, array(
+                    $result = $wpdb->insert($results_table, array(
+                        'quiz_id' => $quiz_id,
+                        'result_nr' => $result_key,
                         'title' => $result['title'],
                         'description' => $result['description'],
                         'image' => $result['image'],
                         'link' => $result['link'],
                         'createdAt' => $date
-                        ),
-                        array( 'quiz_id' => $_GET['quiz'], 'result_nr' => $result_key ));
+                        ));
                 }
             }
         //End results table insert
         //Questions and answers table insert
            if(isset($_POST['question'])){
-            $quiz_id =  $_GET['quiz']; 
             $questions = $_POST['question'];
             foreach($questions as $question_key=>$question){
                 if(!isset($question['multiple_answers']))
                     $question['multiple_answers'] = 0;
-                if(isset($question['question_id'] )){
-                $result = $wpdb->update($questions_table, array(
+                $result = $wpdb->insert($questions_table, array(
                         'quiz_id' => $quiz_id,
                         'name' => $question['title'],
                         'question_nr' => $question['question_nr'],
@@ -499,24 +509,10 @@
                         'question_type' => $question['question_type'],
                         'multiple_answers' => $question['multiple_answers'],
                         'createdAt' => $date
-                        ), 
-                        array('id' => $question['question_id'] )
-                    );
-                    $question_id = $question['question_id'];
-                }
-                else {
-                    $result = $wpdb->insert($questions_table, array(
-                        'quiz_id' => $quiz_id,
-                        'name' => $question['title'],
-                        'question_nr' => $question['question_nr'],
-                        'question' => $question['question_type'],
-                        'question_type' => $question['question_type'],
-                        'multiple_answers' => $question['multiple_answers'],
-                        'createdAt' => $date
                         ));
                 $question_id = $wpdb->insert_id;
 
-                }
+                
                 
                 //Answers table insert
                 if($question['question_type'] == 'number'){
@@ -533,21 +529,7 @@
                                     $answer['result'] = 0;
                                 else
                                     $answer['result'] = implode("," , $answer['result']);
-                                $result = $wpdb->update($answers_table, 
-                                array(
-                                    'question_id' => $question_id,
-                                    'result_nr' => $answer['result'],
-                                    'answer_nr' => $answer['answer_nr'],
-                                    'answer_dq_nr' => $answer['disqualify'],
-                                    'text' => $answer['answer_text'],
-                                    'number1' => $answer['number1'],
-                                    'number2' => $answer['number2'],
-                                    'createdAt' => $date
-                                ),
-                                array('question_id' => $question_id, 'answer_nr' =>  $answer['answer_nr'] )
-                                );
-                                if(!$result){
-                                    $result = $wpdb->insert($answers_table, array(
+                                $result = $wpdb->insert($answers_table, array(
                                         'question_id' => $question_id,
                                         'result_nr' => $answer['result'],
                                         'answer_nr' => $answer['answer_nr'],
@@ -557,7 +539,6 @@
                                         'number2' => $answer['number2'],
                                         'createdAt' => $date
                                         ));
-                                }
                             }
                         }
                     }
@@ -579,18 +560,6 @@
                                     $answer['result'] = 0;
                                 else
                                     $answer['result'] = implode("," , $answer['result']);
-                                $result = $wpdb->update($answers_table, array(
-                                        'question_id' => $question_id,
-                                        'result_nr' => $answer['result'],
-                                        'answer_nr' => $answer['answer_nr'],
-                                        'answer_dq_nr' => $answer['disqualify'],
-                                        'answer_icon' => $answer['image'],
-                                        'text' => $answer['answer_text'],
-                                        'createdAt' => $date
-                                        ),
-                                        array('question_id' => $question_id, 'answer_nr' =>  $answer['answer_nr'] )
-                                    );
-                                if(!$result){
                                     $result = $wpdb->insert($answers_table, array(
                                         'question_id' => $question_id,
                                         'result_nr' => $answer['result'],
@@ -600,7 +569,6 @@
                                         'text' => $answer['answer_text'],
                                         'createdAt' => $date
                                         ));
-                                }
                             }
                         }
                     }   
