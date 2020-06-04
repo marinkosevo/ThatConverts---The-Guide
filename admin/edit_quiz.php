@@ -38,54 +38,54 @@
             <h1> <?php echo esc_html( get_admin_page_title() ); ?> </h1>
             <div class="quiz_navigation">
                 <ul>
-                    <li><a class="nav_links active" id="Quiz_link"><?php _e('Quiz info', 'thatconverts_theguide'); ?></a></li>
-                    <li><a class="nav_links" id="Results_link" ><?php _e('Results', 'thatconverts_theguide'); ?></a></li>
-                    <li><a class="nav_links" id="Questions_link" ><?php _e('Questions', 'thatconverts_theguide'); ?></a></li>
+                    <li><a class="nav_links active" id="Quiz_link"><?php _e('Quiz info', 'dabbel_theguide'); ?></a></li>
+                    <li><a class="nav_links" id="Results_link" ><?php _e('Results', 'dabbel_theguide'); ?></a></li>
+                    <li><a class="nav_links" id="Questions_link" ><?php _e('Questions', 'dabbel_theguide'); ?></a></li>
                 </ul>
             </div>
-            <form action="admin.php?page=thatconverts&action=edit&quiz=<?php echo $quiz_id;?>" id="quiz_form" method="post" enctype="multipart/form-data">
+            <form action="admin.php?page=dabbel&action=edit&quiz=<?php echo $quiz_id;?>" id="quiz_form" method="post" enctype="multipart/form-data">
             <div class="section_wrap" id="Quiz">
                 <div class="quiz_heading">
 
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Quiz name', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="name" value="<?php echo $quiz_data[0]['name'];?>" placeholder="<?php _e('Enter quiz name', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Quiz name', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="name" value="<?php echo $quiz_data[0]['name'];?>" placeholder="<?php _e('Enter quiz name', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description"><?php _e('Quiz desription', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="description" value="<?php echo $quiz_data[0]['description'];?>"  placeholder="<?php _e('Enter quiz description', 'thatconverts_theguide'); ?>">
+                                    <label for="description"><?php _e('Quiz desription', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="description" value="<?php echo $quiz_data[0]['description'];?>"  placeholder="<?php _e('Enter quiz description', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description"><?php _e('Results page title', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="results_title" value="<?php echo $quiz_data[0]['results_title'];?>"  placeholder="<?php _e('Enter results page title', 'thatconverts_theguide'); ?>">
+                                    <label for="description"><?php _e('Results page title', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="results_title" value="<?php echo $quiz_data[0]['results_title'];?>"  placeholder="<?php _e('Enter results page title', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description"><?php _e('Results page desription', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="results_description" value="<?php echo $quiz_data[0]['results_description'];?>"  placeholder="<?php _e('Enter results page description', 'thatconverts_theguide'); ?>">
+                                    <label for="description"><?php _e('Results page desription', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="results_description" value="<?php echo $quiz_data[0]['results_description'];?>"  placeholder="<?php _e('Enter results page description', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="quiz_image">Quiz image (optional)</label><br>
                                     <img class="quiz_img_preview" src="<?php echo $image_src; ?>" style="<?php echo ($image_src != '') ? 'display:block;' : '';?>"/>
                                     <input type="hidden" name="quiz_image" value="<?php echo ($image_src != '') ? $quiz_data[0]['quiz_image'] : '';?>">
-                                    <input type="button" class="button-primary img_upload" value="<?php esc_attr_e( 'Select a image', 'thatconverts_theguide' ); ?>">
+                                    <input type="button" class="button-primary img_upload" value="<?php esc_attr_e( 'Select a image', 'dabbel_theguide' ); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
                                     <input type="checkbox" id="collect_results" name="collect_results" value="1" <?php echo ($quiz_data[0]['collect_results'] == 1) ? 'checked' : '';?>>
-                                    <label for="collect_results"><?php _e('Collect quiz results?', 'thatconverts_theguide'); ?></label><br>
+                                    <label for="collect_results"><?php _e('Collect quiz results?', 'dabbel_theguide'); ?></label><br>
                                 </div>
                         </div>
                         <div class="question">
 
                                 <div class="form-group">
                                     <input type="checkbox" id="collect_email" name="collect_email" value="1"  <?php echo ($quiz_data[0]['collect_email'] == 1) ? 'checked' : '';?>>
-                                    <label for="collect_email"><?php _e('Email address required?', 'thatconverts_theguide'); ?></label><br>
+                                    <label for="collect_email"><?php _e('Email address required?', 'dabbel_theguide'); ?></label><br>
                                 </div>
                                 <div class="form-group email" style="<?php echo ($quiz_data[0]['collect_email'] == 1) ? '' : 'display:none';?>">
-                                    <label for="email_description"><?php _e('Email descripton', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" id="email_description" name="email_description" name="name" value="<?php echo $quiz_data[0]['email_description'];?>"  placeholder="<?php _e('Enter email text', 'thatconverts_theguide'); ?>" <?php echo ($quiz_data[0]['collect_email'] == 1) ? '' : 'disabled';?>>
+                                    <label for="email_description"><?php _e('Email descripton', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" id="email_description" name="email_description" name="name" value="<?php echo $quiz_data[0]['email_description'];?>"  placeholder="<?php _e('Enter email text', 'dabbel_theguide'); ?>" <?php echo ($quiz_data[0]['collect_email'] == 1) ? '' : 'disabled';?>>
                                 </div>
 
                         </div>
@@ -111,21 +111,21 @@
                             <button type="button" class="delete">Delete</button>
                             <div id="result<?php echo $result['result_nr'];?>" class="result">   
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Title', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Title', 'dabbel_theguide'); ?></label>
                                     <input type="text" class="form-control result_title" name="result[<?php echo $result['result_nr'];?>][title]"  value="<?php echo $result['title'];?>" placeholder="Enter result title...">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Description', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Description', 'dabbel_theguide'); ?></label>
                                     <input type="text" class="form-control result_description" name="result[<?php echo $result['result_nr'];?>][description]" value="<?php echo $result['description'];?>" placeholder="Enter result text...">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Image (optional)', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Image (optional)', 'dabbel_theguide'); ?></label>
                                     <img class="quiz_img_preview" src="<?php echo $res_image_src;?>" style="<?php echo ($res_image_src != '') ? 'display:block;' : '';?>"/>
                                     <input type="hidden" name="result[<?php echo $result['result_nr'];?>][image]" value="<?php echo ($res_image_src != '') ? $result['image'] : '';?>">
                                     <input type="button" class="button-primary img_upload" value="Select a image">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Link (optional)', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Link (optional)', 'dabbel_theguide'); ?></label>
                                     <input type="text" class="form-control" name="result[<?php echo $result['result_nr'];?>][link]" value="<?php echo $result['link'];?>" placeholder="Enter result link...">
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                         }
                     ?>
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new result (Max 20)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new result (Max 20)', 'dabbel_theguide'); ?></label>
                             <button type="button" class="btn btn-default" id="add_result" aria-label="Left Align">+</button>
                         </div>
                     </div>
@@ -157,26 +157,26 @@
                         <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_type]" value="<?php echo $question['question_type'];?>">
                         <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_nr]" value="<?php echo $question['question_nr'];?>">
                         <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_id]" value="<?php echo $question['id'];?>">
-                            <h3><?php _e('Question', 'thatconverts_theguide'); ?></h3>
+                            <h3><?php _e('Question', 'dabbel_theguide'); ?></h3>
                             </a>
                         </div>
                         <button type="button" class="delete">Delete</button>
                         <div id="question<?php echo $question['question_nr'];?>" class="">
                             <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Multiple possible answers', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Multiple possible answers', 'dabbel_theguide'); ?></label>
                                     <input type="radio" name="question[<?php echo $question['question_nr'];?>][multiple_answers]" value="0" <?php echo ($question['multiple_answers'] == 0) ? 'checked' : '';?>>
-                                    <label><?php _e('No', 'thatconverts_theguide'); ?></label>
+                                    <label><?php _e('No', 'dabbel_theguide'); ?></label>
                                     <input type="radio" name="question[<?php echo $question['question_nr'];?>][multiple_answers]" value="1" <?php echo ($question['multiple_answers'] == 1) ? 'checked' : '';?>>
-                                    <label><?php _e('Yes', 'thatconverts_theguide'); ?></label><br>
+                                    <label><?php _e('Yes', 'dabbel_theguide'); ?></label><br>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Title', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Title', 'dabbel_theguide'); ?></label>
                                     <input type="text" class="form-control question_text" name="question[<?php echo $question['question_nr'];?>][title]" value="<?php echo $question['name'];?>" placeholder="Enter question title...">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Question', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Question', 'dabbel_theguide'); ?></label>
                                     <input type="text" class="form-control question_text" name="question[<?php echo $question['question_nr'];?>][question]" value="<?php echo $question['question'];?>" placeholder="Enter question text...">
                                 </div>
                             </div>
@@ -220,15 +220,15 @@
                                     
                                                         
                             ?>
-                            <h4><?php _e('Answer', 'thatconverts_theguide'); ?><?php echo $answer['answer_nr'];?></h4>
+                            <h4><?php _e('Answer', 'dabbel_theguide'); ?><?php echo $answer['answer_nr'];?></h4>
                             <div class="answer_wrap" id="answer">
                                 <div class="form-group">
-                                    <label for="logic"><?php _e('Answer', 'thatconverts_theguide'); ?></label>
+                                    <label for="logic"><?php _e('Answer', 'dabbel_theguide'); ?></label>
                                     <input type="hidden" name="answers[<?php echo $question['question_nr'];?>][<?php echo $answer['answer_nr'];?>][answer_nr]" value="<?php echo $answer['answer_nr'];?>">
                                     <input type="text" class="form-control answer_text" name="answers[<?php echo $question['question_nr'];?>][<?php echo $answer['answer_nr'];?>][answer_text]" value="<?php echo $answer['text'];?>" placeholder="Enter answer text...">
                                 </div>
                                     <div class="form-group">
-                                        <label for="name"><?php _e('Answer icon (optional)', 'thatconverts_theguide'); ?></label>
+                                        <label for="name"><?php _e('Answer icon (optional)', 'dabbel_theguide'); ?></label>
                                         <img class="quiz_img_preview" src="<?php echo $ans_image_src;?>" style="<?php echo ($res_image_src != '') ? 'display:block;' : '';?>"/>
                                         <input type="hidden" name="answers[<?php echo $question['question_nr'];?>][<?php echo $answer['answer_nr'];?>][image]" value="<?php echo ($ans_image_src != '') ? $answer['answer_icon'] : '';?>">
                                         <input type="button" class="button-primary img_upload" value="Select a image">
@@ -243,7 +243,7 @@
                             ?>
                             <div class="form-group add_answer_btn">
                             <input type="hidden" class="question_type" name="question[<?php echo $question['question_nr'];?>][question_type]" value="<?php echo $question['question_type'];?>">
-                                <label for="button"><?php _e('Add new answer (Max 8)', 'thatconverts_theguide'); ?></label>
+                                <label for="button"><?php _e('Add new answer (Max 8)', 'dabbel_theguide'); ?></label>
                                 <button type="button" class="btn btn-default add_answer" value="<?php echo $question['question_nr'];?>" aria-label="Left Align">+</button>
                             </div>
                         </div>
@@ -295,16 +295,16 @@
                             <div class="question_heading">
                             <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_id]" value="<?php echo $question['id'];?>">
                             <input type="hidden" name="question[<?php echo $question['question_nr'];?>][question_nr]" value="<?php echo $question['question_nr'];?>">
-                                <h3><?php _e('Question', 'thatconverts_theguide'); ?></h3>
+                                <h3><?php _e('Question', 'dabbel_theguide'); ?></h3>
                             </div>
                             <button type="button" class="delete">Delete</button>
                             <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Title', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Title', 'dabbel_theguide'); ?></label>
                                     <input type="text" class="form-control question_text" name="question[<?php echo $question['question_nr'];?>][title]" value="<?php echo $question['name'];?>" placeholder="Enter question title...">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Question', 'thatconverts_theguide'); ?></label>
+                                    <label for="name"><?php _e('Question', 'dabbel_theguide'); ?></label>
                                     <input type="text" class="form-control question_text" name="question[<?php echo $question['question_nr'];?>][question]" value="<?php echo $question['question'];?>" placeholder="Enter question text...">
                                 </div>
                             </div>
@@ -349,16 +349,16 @@
                                     
                                                         
                             ?>
-                            <h4><?php _e('Condition ', 'thatconverts_theguide'); ?><?php echo $answer['answer_nr'];?></h4>
+                            <h4><?php _e('Condition ', 'dabbel_theguide'); ?><?php echo $answer['answer_nr'];?></h4>
                             <div class="answer_wrap" id="answer">
                                 <div class="form-group">
                                 <?php if($question['question_type'] == 'text'){ ?>
-                                    <label for="logic"><?php _e('If input is:', 'thatconverts_theguide'); ?></label>
+                                    <label for="logic"><?php _e('If input is:', 'dabbel_theguide'); ?></label>
                                     <input type="hidden" name="answers[<?php echo $question['question_nr'];?>][<?php echo $answer['answer_nr'];?>][answer_nr]" value="<?php echo $answer['answer_nr'];?>">
                                     <input type="text" class="form-control answer_text" name="answers[<?php echo $question['question_nr'];?>][<?php echo $answer['answer_nr'];?>][answer_text]" value="<?php echo $answer['text'];?>" placeholder="Enter answer text...">
                                 <?php }
                                 else { ?>
-                                    <label for="logic"><?php _e('If input is between: ', 'thatconverts_theguide'); ?></label>
+                                    <label for="logic"><?php _e('If input is between: ', 'dabbel_theguide'); ?></label>
                                     <input type="hidden" name="answers[<?php echo $question['question_nr'];?>][<?php echo $answer['answer_nr'];?>][answer_nr]" value="<?php echo $answer['answer_nr'];?>">
                                     <input type="number" class="form-control answer_text" name="answers[<?php echo $question['question_nr'];?>][<?php echo $answer['answer_nr'];?>][number1]" placeholder="Enter answer number..." value="<?php echo $answer['number1'];?>">
                                     and 
@@ -375,10 +375,10 @@
                             ?>
                             <div class="form-group add_answer_btn">
                                 <input type="hidden" class="question_type" name="question[<?php echo $question['question_nr'];?>][question_type]" value="<?php echo $question['question_type'];?>">
-                                <label for="button"><?php _e('Add new condition (Max 8)', 'thatconverts_theguide'); ?></label>
+                                <label for="button"><?php _e('Add new condition (Max 8)', 'dabbel_theguide'); ?></label>
                                 <button type="button" class="btn btn-default add_answer" value="<?php echo $question['question_nr'];?>" aria-label="Left Align">+</button>
                             </div>
-                                <h4><?php _e('Default condition (if anything other than conditions is written)', 'thatconverts_theguide'); ?></h4>
+                                <h4><?php _e('Default condition (if anything other than conditions is written)', 'dabbel_theguide'); ?></h4>
                                 <div class="def_answer_wrap">
                                     <input type="hidden" name="answers[<?php echo $question['question_nr'];?>][0][answer_nr]" value="0">
                                     <input type="hidden" name="answers[<?php echo $question['question_nr'];?>][0][number1]" value="0">
@@ -394,12 +394,12 @@
                         }
                     ?>
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new question (Max 10)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new question (Max 10)', 'dabbel_theguide'); ?></label>
                             <select name="question_type" id="question_type">
-                                <option value="" selected disabled hidden><?php _e('Type of question', 'thatconverts_theguide'); ?></option>
-                                <option value="selection"><?php _e('Multiple answer selection', 'thatconverts_theguide'); ?></option>
-                                <option value="text"><?php _e('Text input', 'thatconverts_theguide'); ?></option>
-                                <option value="number"><?php _e('Number input', 'thatconverts_theguide'); ?></option>
+                                <option value="" selected disabled hidden><?php _e('Type of question', 'dabbel_theguide'); ?></option>
+                                <option value="selection"><?php _e('Multiple answer selection', 'dabbel_theguide'); ?></option>
+                                <option value="text"><?php _e('Text input', 'dabbel_theguide'); ?></option>
+                                <option value="number"><?php _e('Number input', 'dabbel_theguide'); ?></option>
                             </select>
                             <button disabled type="button" class="btn btn-default" id="add_question" aria-label="Left Align">+</button>
                         </div>
@@ -580,7 +580,7 @@
    
         if($result){
             echo "<br><h2>";
-            printf(__('Successfully edited quiz!', 'thatconverts_theguide'));
+            printf(__('Successfully edited quiz!', 'dabbel_theguide'));
                 echo "</h2>";
         }
 

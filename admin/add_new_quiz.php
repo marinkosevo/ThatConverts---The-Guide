@@ -11,55 +11,55 @@
             <h1> <?php echo esc_html( get_admin_page_title() ); ?> </h1>
             <div class="quiz_navigation">
                 <ul>
-                    <li><a class="nav_links active" id="Quiz_link"><?php _e('Quiz info', 'thatconverts_theguide'); ?></a></li>
-                    <li><a class="nav_links" id="Results_link" ><?php _e('Results', 'thatconverts_theguide'); ?></a></li>
-                    <li><a class="nav_links" id="Questions_link" ><?php _e('Questions', 'thatconverts_theguide'); ?></a></li>
+                    <li><a class="nav_links active" id="Quiz_link"><?php _e('Quiz info', 'dabbel_theguide'); ?></a></li>
+                    <li><a class="nav_links" id="Results_link" ><?php _e('Results', 'dabbel_theguide'); ?></a></li>
+                    <li><a class="nav_links" id="Questions_link" ><?php _e('Questions', 'dabbel_theguide'); ?></a></li>
                 </ul>
             </div>
-            <form action="admin.php?page=thatconverts_add_new_quiz" id="quiz_form" method="post" enctype="multipart/form-data">
+            <form action="admin.php?page=dabbel_add_new_quiz" id="quiz_form" method="post" enctype="multipart/form-data">
             <div class="section_wrap" id="Quiz">
 
                 <div class="quiz_heading">
 
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Quiz name', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="name" placeholder="<?php _e('Enter quiz name', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Quiz name', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="name" placeholder="<?php _e('Enter quiz name', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description"><?php _e('Quiz desription', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="description" placeholder="<?php _e('Enter quiz description', 'thatconverts_theguide'); ?>">
+                                    <label for="description"><?php _e('Quiz desription', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="description" placeholder="<?php _e('Enter quiz description', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description"><?php _e('Results page title', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="results_title" placeholder="<?php _e('Enter results page title', 'thatconverts_theguide'); ?>">
+                                    <label for="description"><?php _e('Results page title', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="results_title" placeholder="<?php _e('Enter results page title', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description"><?php _e('Results page desription', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="results_description" placeholder="<?php _e('Enter results page description', 'thatconverts_theguide'); ?>">
+                                    <label for="description"><?php _e('Results page desription', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="results_description" placeholder="<?php _e('Enter results page description', 'dabbel_theguide'); ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="quiz_image">Quiz image (optional)</label><br>
                                     <img class="quiz_img_preview" src=""/>
                                     <input type="hidden" name="quiz_image">
-                                    <input type="button" class="button-primary img_upload" value="<?php esc_attr_e( 'Select a image', 'thatconverts_theguide' ); ?>">
+                                    <input type="button" class="button-primary img_upload" value="<?php esc_attr_e( 'Select a image', 'dabbel_theguide' ); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
                                     <input type="checkbox" id="collect_results" name="collect_results" value="1">
-                                    <label for="collect_results"><?php _e('Collect quiz results?', 'thatconverts_theguide'); ?></label><br>
+                                    <label for="collect_results"><?php _e('Collect quiz results?', 'dabbel_theguide'); ?></label><br>
                                 </div>
                         </div>
                         <div class="question">
 
                                 <div class="form-group">
                                     <input type="checkbox" id="collect_email" name="collect_email" value="1">
-                                    <label for="collect_email"><?php _e('Email address required?', 'thatconverts_theguide'); ?></label><br>
+                                    <label for="collect_email"><?php _e('Email address required?', 'dabbel_theguide'); ?></label><br>
                                 </div>
                                 <div class="form-group email" style="display:none;">
-                                    <label for="email_description"><?php _e('Email descripton', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" id="email_description" name="email_description" name="name" placeholder="<?php _e('Enter email text', 'thatconverts_theguide'); ?>" disabled>
+                                    <label for="email_description"><?php _e('Email descripton', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" id="email_description" name="email_description" name="name" placeholder="<?php _e('Enter email text', 'dabbel_theguide'); ?>" disabled>
                                 </div>
 
                         </div>
@@ -73,7 +73,7 @@
             <div class="section_wrap" id="Results" style="display:none">
                     <div id="results_accordion" class="collapse">
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new result (Max 20)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new result (Max 20)', 'dabbel_theguide'); ?></label>
                             <button type="button" class="btn btn-default" id="add_result" aria-label="Left Align">+</button>
                         </div>
                     </div>
@@ -89,12 +89,12 @@
             <div class="section_wrap" id="Questions" style="display:none">
                     <div id="questions_accordion" class="collapse">
                         <div class="form-group">
-                            <label for="button"><?php _e('Add new question (Max 10)', 'thatconverts_theguide'); ?></label>
+                            <label for="button"><?php _e('Add new question (Max 10)', 'dabbel_theguide'); ?></label>
                             <select name="question_type" id="question_type">
-                                <option value="" selected disabled hidden><?php _e('Type of question', 'thatconverts_theguide'); ?></option>
-                                <option value="selection"><?php _e('Multiple answer selection', 'thatconverts_theguide'); ?></option>
-                                <option value="text"><?php _e('Text input', 'thatconverts_theguide'); ?></option>
-                                <option value="number"><?php _e('Number input', 'thatconverts_theguide'); ?></option>
+                                <option value="" selected disabled hidden><?php _e('Type of question', 'dabbel_theguide'); ?></option>
+                                <option value="selection"><?php _e('Multiple answer selection', 'dabbel_theguide'); ?></option>
+                                <option value="text"><?php _e('Text input', 'dabbel_theguide'); ?></option>
+                                <option value="number"><?php _e('Number input', 'dabbel_theguide'); ?></option>
                             </select>
                             <button disabled type="button" class="btn btn-default" id="add_question" aria-label="Left Align">+</button>
                         </div>
@@ -265,7 +265,7 @@
  
         if($result){
             echo "<br><h2>";
-            printf(__('Successfully added new quiz: %s', 'thatconverts_theguide'), $quiz_name);
+            printf(__('Successfully added new quiz: %s', 'dabbel_theguide'), $quiz_name);
                 echo "</h2>";
         }
 

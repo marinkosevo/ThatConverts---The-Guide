@@ -1,7 +1,7 @@
 <?php
 
 
-function thatconverts_shortcode($atts) { 
+function dabbel_shortcode($atts) { 
     global $wpdb;
     //Tables
     $quiz_table = $wpdb->prefix.'quizzes';
@@ -163,7 +163,7 @@ function thatconverts_shortcode($atts) {
     $quiz_page .= '<button type="button" id="start_btn" class="quiz_btn">'.$start_btn.'<i class="button_icon"></i></button> 
                     </div>'; 
     $quiz_page .= '<form id="quiz_form">'; 
-    $quiz_page .= '<input type="hidden" name="action" value="thatconverts_theguide_submit">';
+    $quiz_page .= '<input type="hidden" name="action" value="dabbel_theguide_submit">';
     $quiz_page .= '<input type="hidden" name="quiz_id" value="'. $quiz_data[0]['id'] .'">';
     $quiz_page .= '<input type="hidden" name="quiz_collect" value="' . $quiz_data[0]['collect_results'] . '">';
 
@@ -213,16 +213,16 @@ function thatconverts_shortcode($atts) {
             $quiz_page .= '</div>';
         }
         //Pagination, if last page then submit button
-        $quiz_page .= '<p class="prev">'. __($prev_btn, 'thatconverts_theguide').' </p> '; 
+        $quiz_page .= '<p class="prev">'. __($prev_btn, 'dabbel_theguide').' </p> '; 
 
         if($question_key != (count($questions_data)-1)){
-            $quiz_page .= '<button type="button" class="quiz_btn next" disabled>'. __($next_btn, 'thatconverts_theguide').' <i class="button_icon"></i></button> '; 
+            $quiz_page .= '<button type="button" class="quiz_btn next" disabled>'. __($next_btn, 'dabbel_theguide').' <i class="button_icon"></i></button> '; 
         }
         else if ($quiz_data[0]['collect_email'] == 1){
-            $quiz_page .= '<button type="button" class="quiz_btn next email" disabled>'. __($next_btn, 'thatconverts_theguide').' <i class="button_icon"></i></button> '; 
+            $quiz_page .= '<button type="button" class="quiz_btn next email" disabled>'. __($next_btn, 'dabbel_theguide').' <i class="button_icon"></i></button> '; 
         }
         else 
-        $quiz_page .= '<button type="submit" class="quiz_btn next" id="quiz_submit" disabled>'. __($submit_btn, 'thatconverts_theguide').'<i class="button_icon"></i></button>';
+        $quiz_page .= '<button type="submit" class="quiz_btn next" id="quiz_submit" disabled>'. __($submit_btn, 'dabbel_theguide').'<i class="button_icon"></i></button>';
         $quiz_page .= '</div> </div>';
 
     } 
@@ -233,10 +233,10 @@ function thatconverts_shortcode($atts) {
                             <input type="text" class="email" placeholder="@" name="quiz_email">
                             <div class="email_wrap">
                                 <input type="checkbox" id="email_contact" name="email_contact" value="1">
-                                <label for="email_contact">'.__($email_description, 'thatconverts_theguide').'</label><br>
+                                <label for="email_contact">'.__($email_description, 'dabbel_theguide').'</label><br>
                             </div>
-                         <p class="prev">'. __($prev_btn, 'thatconverts_theguide').' </p>
-                        <button type="submit" class="quiz_btn next" id="quiz_submit" disabled>'. __($submit_btn, 'thatconverts_theguide').'<i class="button_icon"></i></button> 
+                         <p class="prev">'. __($prev_btn, 'dabbel_theguide').' </p>
+                        <button type="submit" class="quiz_btn next" id="quiz_submit" disabled>'. __($submit_btn, 'dabbel_theguide').'<i class="button_icon"></i></button> 
                         </div>
                     </div>';
     }
@@ -266,4 +266,4 @@ function thatconverts_shortcode($atts) {
         return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
     }
 // register shortcode
-add_shortcode('thatconverts_quiz', 'thatconverts_shortcode'); 
+add_shortcode('dabbel_quiz', 'dabbel_shortcode'); 

@@ -1,8 +1,8 @@
 <?php
-add_action("wp_ajax_thatconverts_theguide_submit", "thatconverts_theguide_submit");
-add_action("wp_ajax_nopriv_thatconverts_theguide_submit", "thatconverts_theguide_submit");
+add_action("wp_ajax_dabbel_theguide_submit", "dabbel_theguide_submit");
+add_action("wp_ajax_nopriv_dabbel_theguide_submit", "dabbel_theguide_submit");
 
-function thatconverts_theguide_submit(){
+function dabbel_theguide_submit(){
     global $wpdb;
     $quiz_table = $wpdb->prefix.'quizzes';
     $questions_table = $wpdb->prefix.'quiz_questions';

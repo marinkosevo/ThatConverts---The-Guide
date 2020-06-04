@@ -36,77 +36,77 @@
         ?>
         <div class="quizForm_wrap">
             <h1> <?php echo esc_html( get_admin_page_title() ); ?> </h1>
-            <form action="admin.php?page=thatconverts_settings" id="settings_form" method="post">
+            <form action="admin.php?page=dabbel_settings" id="settings_form" method="post">
             <div class="section_wrap" id="Quiz">
 
                 <div class="quiz_heading">
-                        <h2> <?php _e('Buttons', 'thatconverts_theguide'); ?> </h2>
+                        <h2> <?php _e('Buttons', 'dabbel_theguide'); ?> </h2>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Start Button', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="start" value="<?php  echo (($settings_data[0]['start_btn'] != '')) ? $settings_data[0]['start_btn'] : 'Start quiz'; ?>" placeholder="<?php _e('Enter "Start" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Start Button', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="start" value="<?php  echo (($settings_data[0]['start_btn'] != '')) ? $settings_data[0]['start_btn'] : 'Start quiz'; ?>" placeholder="<?php _e('Enter "Start" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Next button', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="next" value="<?php  echo (($settings_data[0]['next_btn'] != '')) ? $settings_data[0]['next_btn'] : 'Next'; ?>" placeholder="<?php _e('Enter "Next" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Next button', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="next" value="<?php  echo (($settings_data[0]['next_btn'] != '')) ? $settings_data[0]['next_btn'] : 'Next'; ?>" placeholder="<?php _e('Enter "Next" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Previous button', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="previous" value="<?php  echo (($settings_data[0]['prev_btn'] != '')) ? $settings_data[0]['prev_btn'] : 'Previous'; ?>" placeholder="<?php _e('Enter "Previous" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Previous button', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="previous" value="<?php  echo (($settings_data[0]['prev_btn'] != '')) ? $settings_data[0]['prev_btn'] : 'Previous'; ?>" placeholder="<?php _e('Enter "Previous" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Submit button', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="submit" value="<?php  echo (($settings_data[0]['submit_btn'] != '')) ? $settings_data[0]['submit_btn'] : 'Submit'; ?>" placeholder="<?php _e('Enter "Submit" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Submit button', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="submit" value="<?php  echo (($settings_data[0]['submit_btn'] != '')) ? $settings_data[0]['submit_btn'] : 'Submit'; ?>" placeholder="<?php _e('Enter "Submit" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Back to quiz button', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="back_quiz" value="<?php  echo (($settings_data[0]['back_quiz'] != '')) ? $settings_data[0]['back_quiz'] : 'Back to quiz'; ?>" placeholder="<?php _e('Enter "Back to quiz" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Back to quiz button', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="back_quiz" value="<?php  echo (($settings_data[0]['back_quiz'] != '')) ? $settings_data[0]['back_quiz'] : 'Back to quiz'; ?>" placeholder="<?php _e('Enter "Back to quiz" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Back to start button', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="back_start" value="<?php  echo (($settings_data[0]['back_start'] != '')) ? $settings_data[0]['back_start'] : 'Back to start'; ?>" placeholder="<?php _e('Enter "Back to start" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Back to start button', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="back_start" value="<?php  echo (($settings_data[0]['back_start'] != '')) ? $settings_data[0]['back_start'] : 'Back to start'; ?>" placeholder="<?php _e('Enter "Back to start" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('More here button', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="more_btn" value="<?php  echo (($settings_data[0]['more_btn'] != '')) ? $settings_data[0]['more_btn'] : 'More here'; ?>" placeholder="<?php _e('Enter "More here" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('More here button', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="more_btn" value="<?php  echo (($settings_data[0]['more_btn'] != '')) ? $settings_data[0]['more_btn'] : 'More here'; ?>" placeholder="<?php _e('Enter "More here" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Use this email checkbox', 'thatconverts_theguide'); ?></label><br>
-                                    <input type="text" class="form-control" name="email_description" value="<?php  echo (($settings_data[0]['email_description'] != '')) ? $settings_data[0]['email_description'] : 'Use this email for contact purposes'; ?>" placeholder="<?php _e('Enter "Use this email for contact purposes" button text', 'thatconverts_theguide'); ?>">
+                                    <label for="name"><?php _e('Use this email checkbox', 'dabbel_theguide'); ?></label><br>
+                                    <input type="text" class="form-control" name="email_description" value="<?php  echo (($settings_data[0]['email_description'] != '')) ? $settings_data[0]['email_description'] : 'Use this email for contact purposes'; ?>" placeholder="<?php _e('Enter "Use this email for contact purposes" button text', 'dabbel_theguide'); ?>">
                                 </div>
                         </div>
-                        <h2> <?php _e('Colors', 'thatconverts_theguide'); ?> </h2>
+                        <h2> <?php _e('Colors', 'dabbel_theguide'); ?> </h2>
 
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Title color', 'thatconverts_theguide'); ?></label><br>
+                                    <label for="name"><?php _e('Title color', 'dabbel_theguide'); ?></label><br>
                                     <input class="jscolor" name="title_color" value="<?php  echo (($settings_data[0]['title_color'] != '')) ? $settings_data[0]['title_color'] : '#12008a'; ?>"><br><br>
                                 </div>
                         </div>
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Description color', 'thatconverts_theguide'); ?></label><br>
+                                    <label for="name"><?php _e('Description color', 'dabbel_theguide'); ?></label><br>
                                     <input class="jscolor" name="desc_color" value="<?php  echo (($settings_data[0]['desc_color'] != '')) ? $settings_data[0]['desc_color'] : '#3d366c'; ?>"><br><br>
                                 </div>
                         </div>
 
                         <div class="question">
                                 <div class="form-group">
-                                    <label for="name"><?php _e('Main color', 'thatconverts_theguide'); ?></label><br>
+                                    <label for="name"><?php _e('Main color', 'dabbel_theguide'); ?></label><br>
                                     <input class="jscolor" name="btn_color" value="<?php  echo (($settings_data[0]['btn_color'] != '')) ? $settings_data[0]['btn_color'] : '#1600a9'; ?>"><br><br>
                                 </div>
                         </div>
@@ -185,7 +185,7 @@
 
         if($result){
             echo "<br><h2>";
-            printf(__('Successfully updated settings', 'thatconverts_theguide'));
+            printf(__('Successfully updated settings', 'dabbel_theguide'));
                 echo "</h2>";
         }
 

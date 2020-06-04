@@ -13,7 +13,7 @@ add_action( 'wp_enqueue_scripts', 'quizEnqueuePublic' );
 
 	function quizEnqueuePublic(){
 		global $post;   
-		if( isset($post->post_content) AND has_shortcode( $post->post_content, 'thatconverts_quiz') ){
+		if( isset($post->post_content) AND has_shortcode( $post->post_content, 'dabbel_quiz') ){
 		wp_enqueue_script( 'quiz_custom_script', plugins_url( 'assets/js/quiz_custom.js', __FILE__ ), array('jquery'), null );
 		wp_enqueue_script( 'lottie_script', plugins_url( 'assets/js/lottie.js', __FILE__ ), array('jquery'), null );
 		wp_localize_script( 'quiz_custom_script', 'my_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );

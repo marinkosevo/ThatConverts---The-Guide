@@ -12,32 +12,32 @@ include ('settings.php');
 if ( !function_exists( 'quizAddMenu' ) ) {
 	function quizAddMenu() {
         add_menu_page('All Quizzes', //page title
-        'ThatConverts - The Guide', //menu title
+        'dabbel - The Guide', //menu title
         'manage_options', //capabilities
-        'thatconverts', //menu slug
+        'dabbel', //menu slug
         'allQuizzes' //function
         );
-        add_submenu_page('thatconverts', //parent-menu slug
+        add_submenu_page('dabbel', //parent-menu slug
         'All Quizzes', //menu title
         'All Quizzes', //page title
         'manage_options', //capabilities
-        'thatconverts', //menu slug
+        'dabbel', //menu slug
         'allQuizzes' //function
         );
         
-        add_submenu_page( 'thatconverts',
+        add_submenu_page( 'dabbel',
         'Add new Quiz',
         'Add new Quiz',
         'manage_options',
-        'thatconverts_add_new_quiz',
+        'dabbel_add_new_quiz',
         'addNewQuiz' 
             );
 
-        add_submenu_page( 'thatconverts',
+        add_submenu_page( 'dabbel',
         'Settings',
         'Settings',
         'manage_options',
-        'thatconverts_settings',
+        'dabbel_settings',
         'quiz_settings' 
             );
         }

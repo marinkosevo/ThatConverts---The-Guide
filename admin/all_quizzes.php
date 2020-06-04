@@ -9,7 +9,7 @@
         else if(isset($_GET['action']) && ($_GET['action'] == 'results')){
 
             $myListTable = new QuizResults_Table();
-            echo '<div class="wrap"><h2>'. __('All Quizzes Table', 'thatconverts_theguide').'</h2>';
+            echo '<div class="wrap"><h2>'. __('All Quizzes Table', 'dabbel_theguide').'</h2>';
             echo '<form method="GET">' ;
             $myListTable->prepare_items(); 
             ?>
@@ -29,7 +29,7 @@
                 deleteQuiz($_GET['quiz']);
             }
             $myListTable = new Quiz_Table();
-            echo '<div class="wrap"><h2>'. __('All Quizzes Table', 'thatconverts_theguide').'</h2>';
+            echo '<div class="wrap"><h2>'. __('All Quizzes Table', 'dabbel_theguide').'</h2>';
             echo '<form method="GET">' ;
             $myListTable->prepare_items(); 
             ?>
@@ -121,9 +121,9 @@ class Quiz_Table extends WP_List_Table {
         $columns = array(
           'cb'        => '<input type="checkbox" />',
           'id' => 'ID',
-          'name'    => __('Name', 'thatconverts_theguide'),
-          'createdAt'      => __('Created At', 'thatconverts_theguide'),
-          'shortcode' => __('Shortcode', 'thatconverts_theguide')
+          'name'    => __('Name', 'dabbel_theguide'),
+          'createdAt'      => __('Created At', 'dabbel_theguide'),
+          'shortcode' => __('Shortcode', 'dabbel_theguide')
         );
         return $columns;
       }
@@ -207,7 +207,7 @@ class Quiz_Table extends WP_List_Table {
 
       function column_shortcode($item) {
         return sprintf(
-            '[thatconverts_quiz id="%s"]', $item['id']
+            '[dabbel_quiz id="%s"]', $item['id']
             );         
         }  
         function delete($item) {
@@ -248,9 +248,9 @@ class QuizResults_Table extends WP_List_Table {
         $columns = array(
           'cb'        => '<input type="checkbox" />',
           'id' => 'ID',
-          'email'    => __('Email', 'thatconverts_theguide'),
-          'createdAt'      => __('Created At', 'thatconverts_theguide'),
-          'export' => __('Export', 'thatconverts_theguide')
+          'email'    => __('Email', 'dabbel_theguide'),
+          'createdAt'      => __('Created At', 'dabbel_theguide'),
+          'export' => __('Export', 'dabbel_theguide')
         );
         return $columns;
       }

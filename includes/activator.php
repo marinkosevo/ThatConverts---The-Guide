@@ -6,8 +6,8 @@
  * @link       https://github.com/marinkosevo/
  * @since      1.0.0
  *
- * @package    Thatconverts_theguide
- * @subpackage Thatconverts_theguide/includes
+ * @package    dabbel_theguide
+ * @subpackage dabbel_theguide/includes
  */
 	 function activate() {
 		global $wpdb;

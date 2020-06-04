@@ -22,7 +22,7 @@
  * @link       https://github.com/marinkosevo/
  * @since      1.0.0
  *
- * @package    Thatconverts_theguide
+ * @package    dabbel_theguide
  */
 
 // If uninstall not called from WordPress, then exit.
